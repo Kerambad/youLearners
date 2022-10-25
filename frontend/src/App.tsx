@@ -1,23 +1,16 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import VideoInsert from './components/VideoInsert';
+import VideoPlayer from './components/VideoPlayer';
+import useManageVideos from './hooks/useManageVideos';
 
 function App() {
-  const [testMessage, setTestMessage] = useState("")
 
-  useEffect(() => {
-    fetchTestMessage();
-  }, [])
+  const {addNewVideo, currentVideo} = useManageVideos();
 
-  const fetchTestMessage = () => {
-    axios.get("/api/test")
-      .then((response) => response.data)
-      .then((data) => setTestMessage(data))
-      .catch((error) => console.log(error))
-  }
   return (
 
     <div className="App">
-      <h1>{testMessage}</h1>
+      <VideoPlayer currentVideoId={currentVideo.videoId}/>
+      <VideoInsert setVideoIdFunction={addNewVideo}/>
     </div>
   );
 }
