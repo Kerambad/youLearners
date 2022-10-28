@@ -6,8 +6,8 @@ type HistoryElementProps = {
 
 export default function HistoryElement(props: HistoryElementProps) {
   return (
-    <div>
-        <p>{props.video.videoId}</p>
-    </div>
+    <>
+        <p>{props.video.title}</p>
+    </>
   )
 }
