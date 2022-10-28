@@ -3,6 +3,7 @@ import { Video } from '../models/Video'
 
 type VideoInsertProps = {
     setVideoIdFunction: (video: Video) => void
+    isActive: number
 }
 export default function VideoInsert(props: VideoInsertProps) {
 
@@ -14,10 +15,11 @@ export default function VideoInsert(props: VideoInsertProps) {
         })
     }
 
+    if (props.isActive !== 1) return null;
     return (
         <div className={"container text-center"}>
             <form onSubmit={(e) => {
-                e.preventDefault();
+                e.preventDefault(); 
                 createNewVideo();
                 setIdInput("");
                 }}>

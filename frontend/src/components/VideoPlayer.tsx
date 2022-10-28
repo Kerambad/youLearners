@@ -1,5 +1,5 @@
-import React, { } from 'react'
-import YouTube, { YouTubeProps } from 'react-youtube'
+import React, {} from 'react'
+import YouTube, {YouTubeProps} from 'react-youtube'
 
 type VideoPlayerProps = {
     currentVideoId: string;
@@ -7,21 +7,20 @@ type VideoPlayerProps = {
 
 export default function VideoPlayer(props: VideoPlayerProps) {
     const playOptions: YouTubeProps['opts'] = {
-        width: window.screen.width,
-        height: (window.screen.width / 16) * 9,
         playerVars: {
-          autoplay: 0,
-          fs: 0
+            autoplay: 0,
+            fs: 0
         },
-      };
+    };
     return (
-        <div className='ratio ratio-16x9'>
+        <>
             <YouTube
+                className='ratio ratio-16x9'
                 videoId={props.currentVideoId}
                 opts={playOptions}
             />
 
-        </div>
+        </>
     )
 
 }
