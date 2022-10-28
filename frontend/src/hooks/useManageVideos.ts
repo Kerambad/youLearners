@@ -31,5 +31,5 @@ export default function useManageVideos() {
         .catch((error) => console.log(error))
        }
 
-      return{videos, addNewVideo, currentVideo}
+      return{videos, addNewVideo, currentVideo, fetchSingleVideo}
 }

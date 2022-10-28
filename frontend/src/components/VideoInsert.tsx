@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { Video } from '../models/Video'
 
+
 type VideoInsertProps = {
     setVideoIdFunction: (video: Video) => void
+    loadVideo: (videoId: string) => void
     isActive: number
 }
 export default function VideoInsert(props: VideoInsertProps) {
@@ -26,6 +28,7 @@ export default function VideoInsert(props: VideoInsertProps) {
                 <input  className={"form-control my-2 w-100"} type={"text"} placeholder="Video-ID" value={idInput} onChange={(action) => setIdInput(action.target.value)}></input>
                 <button className='btn btn-danger w-50 ' type='submit'>Add Video</button>
             </form>
+                
         </div>
     )
 }
