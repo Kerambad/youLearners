@@ -4,7 +4,10 @@ import { Video } from '../models/Video';
 
 export default function useManageVideos() {
   const [videos, setVideos] = useState([])
-  const [currentVideo,setCurrentVideo] = useState<Video>({videoId: ""})
+  const [currentVideo,setCurrentVideo] = useState<Video>({
+    videoId:"",
+    title: ""
+  })
 
     useEffect(() => {
         fetchTestMessage();

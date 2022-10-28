@@ -19,27 +19,31 @@ class VideoServiceTest {
     private final VideoRepo testRepo = mock(VideoRepo.class);
     private final VideoService testService = new VideoService(testRepo);
 
+
+    Video testVideo1 = new Video("1", "test");
+    Video testVideo2 = new Video("2", "test2");
+    Video testVideo1Expected = new Video("1", "test");
+    Video testVideo2Expected = new Video("2", "test2");
     @Test
     void getCompleteHistory_ShouldReturnListOfVideos() {
         //GIVEN
-        when(testRepo.findAll()).thenReturn(List.of(new Video("1"),
-                new Video("2")));
+        when(testRepo.findAll()).thenReturn(List.of(testVideo1,testVideo2));
         //WHEN
         List<Video> actual = testService.getCompleteHistory();
         //THEN
-        List<Video> expected = List.of(new Video("1"),
-                new Video("2"));
+        List<Video> expected = List.of(testVideo1Expected,
+                testVideo2Expected);
         assertEquals(expected,actual);
     }
 
     @Test
     void addNewVideo_ShouldReturnSuccessfullyAddedVideo() throws AlreadyExistsException {
         //GIVEN
-                when(testRepo.save(any())).thenReturn(new Video("1"));
+                when(testRepo.save(any())).thenReturn(testVideo1);
         //WHEN
-                Video actual = testService.addNewVideo(new Video("1"));
+                Video actual = testService.addNewVideo(testVideo1);
         //THEN
-                Video expected = new Video("1");
+                Video expected = testVideo1Expected;
                 assertEquals(expected, actual);
     }
     @Test
@@ -48,17 +52,17 @@ class VideoServiceTest {
         when(testRepo.existsById(any())).thenReturn(true);
         //WHEN
         //THEN
-        assertThrows(AlreadyExistsException.class, () -> testService.addNewVideo(new Video("2")));
+        assertThrows(AlreadyExistsException.class, () -> testService.addNewVideo(testVideo1));
     }
 
     @Test
     void getSingleVideo_ShouldReturnVideo() {
         //GIVEN
-            when(testRepo.findById(any())).thenReturn(Optional.of(new Video("4")));
+            when(testRepo.findById(any())).thenReturn(Optional.of(testVideo1));
         //WHEN
-            Video actual = testService.getSingleVideo("4");
+            Video actual = testService.getSingleVideo("1");
         //THEN
-            Video expected = new Video("4");
+            Video expected = testVideo1Expected;
             assertEquals(expected, actual);
     }
     @Test

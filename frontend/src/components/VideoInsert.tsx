@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Video } from '../models/Video'
+import PreRenderVideo from './PreRenderVideo'
 
 
 type VideoInsertProps = {
@@ -9,26 +10,50 @@ type VideoInsertProps = {
 }
 export default function VideoInsert(props: VideoInsertProps) {
 
-    const [idInput, setIdInput] = useState("")
+    const [videoLink, setVideoLink] = useState("")
+    const [videoId, setVideoId] = useState("")
+    const [videoTitle, setVideoTitle] = useState("")
 
     function createNewVideo() {
         props.setVideoIdFunction({
-            videoId: idInput
+            videoId: videoId,
+            title: videoTitle
         })
     }
+
+    function handleLink(action: React.ChangeEvent<HTMLInputElement>) {
+        setVideoLink(action.target.value)
+        setVideoId(trimLinkToVideoId(action.target.value))
+    }
+
+    function trimLinkToVideoId(link: string): string {
+        return link.split("v=")[1]
+    }
+
 
     if (props.isActive !== 1) return null;
     return (
         <div className={"container text-center"}>
+            <PreRenderVideo videoId={videoId} getVideoStatsFunction={(action) => setVideoTitle(action.target.videoTitle)} />
             <form onSubmit={(e) => {
-                e.preventDefault(); 
+                e.preventDefault();
                 createNewVideo();
-                setIdInput("");
-                }}>
-                <input  className={"form-control my-2 w-100"} type={"text"} placeholder="Video-ID" value={idInput} onChange={(action) => setIdInput(action.target.value)}></input>
+                setVideoId("");
+            }}>
+                <div className='form-floating my-1'>
+                    <input className={"form-control my-2 w-100"} id='linkInsert' type={"text"} placeholder="Video-Link" value={videoLink} onChange={(action) => handleLink(action)}></input>
+                    <label htmlFor='linkInsert'>Video-Link</label>
+                </div>
+                <div className='form-floating my-1' >
+                    <input className={"form-control my-2 w-100"} id='idInsert' type={"text"} placeholder="Video-ID" value={videoId} onChange={(action) => setVideoId(action.target.value)}></input>
+                    <label htmlFor='idInsert'>Video-ID</label>
+                </div>
+                <div className='form-floating my-1' >
+                    <textarea className={"form-control my-2 w-100"} id='title' placeholder="Title" value={videoTitle} onChange={(action) => setVideoTitle(action.target.value)} rows={1} style={{height: '7em'}} ></textarea>
+                    <label htmlFor='title'>Title</label>
+                </div>
                 <button className='btn btn-danger w-50 ' type='submit'>Add Video</button>
             </form>
-                
         </div>
     )
 }

@@ -13,4 +13,5 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Video {
     @Id
     private String videoId;
+    private String title;
 }
