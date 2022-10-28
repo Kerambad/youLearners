@@ -1,3 +1,4 @@
+import Navbar from './components/Navbar';
 import VideoInsert from './components/VideoInsert';
 import VideoPlayer from './components/VideoPlayer';
 import useManageVideos from './hooks/useManageVideos';
@@ -8,9 +9,10 @@ function App() {
 
   return (
 
-    <div className="App">
+    <div className="vh-100">
       <VideoPlayer currentVideoId={currentVideo.videoId}/>
       <VideoInsert setVideoIdFunction={addNewVideo}/>
+      <Navbar/>
     </div>
   );
 }
