@@ -59,6 +59,7 @@ export default function VideoInsert(props: VideoInsertProps) {
                         placeholder="Video-ID"
                         value={videoId}
                         onChange={(action) => setVideoId(action.target.value)}
+                        required={true}
                     />
                     <label htmlFor='idInsert'>Video-ID</label>
                 </div>
@@ -71,6 +72,7 @@ export default function VideoInsert(props: VideoInsertProps) {
                         onChange={(action) => setVideoTitle(action.target.value)}
                         rows={1}
                         style={{ height: '7em' }}
+                        required={true}
                     />
                     <label htmlFor='title'>Title</label>
                 </div>

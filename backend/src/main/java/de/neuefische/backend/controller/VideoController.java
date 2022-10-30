@@ -31,4 +31,10 @@ public class VideoController {
     public Video getSingleVideo(@PathVariable String videoId) {
         return videoService.getSingleVideo(videoId);
     }
+    @DeleteMapping("/{videoId}")
+    public Boolean removeSingleVideo(@PathVariable String videoId) {
+        return videoService.removeSingleVideo(videoId);
+    }
+
 }
+

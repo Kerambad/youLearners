@@ -96,7 +96,25 @@ class VideoControllerTest {
         //THEN
 
     }
+    @Test
+    @DirtiesContext
+    void addNewVideo_ShouldReturnStatusCode_404BadRequest_IfElementHasEmptyId() throws Exception {
+        //GIVEN
+        String toPost = """ 
+                {
+                "videoId":"",
+                "title": "test"
+                }
+                """;
+        content().json(toPost);
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/videos")
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .content(toPost))
+                .andExpect(status().isBadRequest());
+        //THEN
 
+    }
     @Test
     @DirtiesContext
     void getSingleVideo_ShouldReturnSingleVideo() throws Exception {
@@ -126,5 +144,27 @@ class VideoControllerTest {
 
         //THEN
 
+    }
+
+    @Test
+    @DirtiesContext
+    void removeSingleVideo_ShouldReturnTrue_IfVideoWasDeletedSuccessfully() throws Exception {
+        //GIVEN
+            testRepo.save(new Video("1", "test"));
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.delete( "/api/videos/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+        //THEN
+
+    }
+    @Test
+    @DirtiesContext
+    void removeSingleVideo_ShouldReturn_StatusCode404NotFound_IfVideoIdWasNotFound() throws Exception {
+        //GIVEN
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.delete( "/api/videos/1"))
+                .andExpect(status().isNotFound());
+        //THEN
     }
 }
