@@ -11,15 +11,14 @@ export default function History(props: HistoryProps) {
 
     const createHistoryElement = (singleVideo: Video) => {
         return (
-        <div onClick={() => props.loadVideo(singleVideo.videoId)} className='border border-dark m-1' key={singleVideo.videoId}>
-            <HistoryElement video={singleVideo} removeById={props.removeById}/>
-        </div>)
+            <HistoryElement video={singleVideo} removeById={props.removeById} loadVideo={props.loadVideo} key={singleVideo.videoId} />
+        )
     }
 
     if (props.isActive !== 2) return null;
     return (
-        <div className={"container text-center"}>
-            {props.allVideos.map((singleVideo: Video) => { return createHistoryElement(singleVideo) })}
-        </div>
+            <div className='container p-0 m-0' >
+                {props.allVideos.map((singleVideo: Video) => { return createHistoryElement(singleVideo) })}
+            </div>
     )
 }
