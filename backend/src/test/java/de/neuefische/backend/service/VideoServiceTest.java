@@ -19,48 +19,64 @@ class VideoServiceTest {
     private final VideoRepo testRepo = mock(VideoRepo.class);
     private final VideoService testService = new VideoService(testRepo);
 
+
+    Video testVideo1 = new Video("1", "test");
+    Video testVideo2 = new Video("2", "test2");
+    Video testVideo1Expected = new Video("1", "test");
+    Video testVideo2Expected = new Video("2", "test2");
+
     @Test
     void getCompleteHistory_ShouldReturnListOfVideos() {
         //GIVEN
-        when(testRepo.findAll()).thenReturn(List.of(new Video("1"),
-                new Video("2")));
+        when(testRepo.findAll()).thenReturn(List.of(testVideo1, testVideo2));
         //WHEN
         List<Video> actual = testService.getCompleteHistory();
         //THEN
-        List<Video> expected = List.of(new Video("1"),
-                new Video("2"));
-        assertEquals(expected,actual);
+        List<Video> expected = List.of(testVideo1Expected,
+                testVideo2Expected);
+        assertEquals(expected, actual);
     }
 
     @Test
     void addNewVideo_ShouldReturnSuccessfullyAddedVideo() throws AlreadyExistsException {
         //GIVEN
-                when(testRepo.save(any())).thenReturn(new Video("1"));
+        when(testRepo.save(any())).thenReturn(testVideo1);
         //WHEN
-                Video actual = testService.addNewVideo(new Video("1"));
+        Video actual = testService.addNewVideo(testVideo1);
         //THEN
-                Video expected = new Video("1");
-                assertEquals(expected, actual);
+        Video expected = testVideo1Expected;
+        assertEquals(expected, actual);
     }
+
     @Test
     void addNewVideo_ShouldThrowAlreadyExistsException() {
         //GIVEN
         when(testRepo.existsById(any())).thenReturn(true);
         //WHEN
         //THEN
-        assertThrows(AlreadyExistsException.class, () -> testService.addNewVideo(new Video("2")));
+        assertThrows(AlreadyExistsException.class, () -> testService.addNewVideo(testVideo1));
+    }
+
+    @Test
+    void addNewVideo_ShouldThrowIllegalArgumentException() {
+        //GIVEN
+        when(testRepo.existsById(any())).thenReturn(false);
+        //WHEN
+        //THEN
+        assertThrows(IllegalArgumentException.class, () -> testService.addNewVideo(new Video("","test")));
     }
 
     @Test
     void getSingleVideo_ShouldReturnVideo() {
         //GIVEN
-            when(testRepo.findById(any())).thenReturn(Optional.of(new Video("4")));
+        when(testRepo.findById(any())).thenReturn(Optional.of(testVideo1));
         //WHEN
-            Video actual = testService.getSingleVideo("4");
+        Video actual = testService.getSingleVideo("1");
         //THEN
-            Video expected = new Video("4");
-            assertEquals(expected, actual);
+        Video expected = testVideo1Expected;
+        assertEquals(expected, actual);
     }
+
     @Test
     void getSingleVideo_ShouldThrow_NoSuchElementException() {
         //GIVEN
@@ -68,6 +84,25 @@ class VideoServiceTest {
         //WHEN
         assertThrows(NoSuchElementException.class, () -> testService.getSingleVideo("4"));
         //THEN
+
+    }
+    @Test
+    void removeSingleVideo_ShouldReturnTrue_IfVideoWasDeleted() {
+        //GIVEN
+        when(testRepo.existsById("1")).thenReturn(true);
+        //WHEN
+        Boolean actual = testService.removeSingleVideo("1");
+        //THEN
+        assertTrue(actual);
+
+    }
+    @Test
+    void removeSingleVideo_ShouldThrowNoSuchElementException_IfVideoIdWasNotFound() {
+        //GIVEN
+        when(testRepo.existsById("1")).thenReturn(false);
+        //WHEN
+        //THEN
+        assertThrows(NoSuchElementException.class, () -> testService.removeSingleVideo("1"));
 
     }
 }

@@ -17,6 +17,7 @@ export default function VideoPlayer(props: VideoPlayerProps) {
             <YouTube
                 className='ratio ratio-16x9'
                 videoId={props.currentVideoId}
+                onStateChange={(e) => console.log(e.target.videoTitle)}
                 opts={playOptions}
             />
 

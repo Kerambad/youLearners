@@ -31,14 +31,16 @@ class VideoControllerTest {
     @DirtiesContext
     void getCompleteHistory_ReturnsListOfVideoModels() throws Exception {
         //GIVE
-        testRepo.saveAll(List.of(new Video("1"), new Video("3")));
+        testRepo.saveAll(List.of(new Video("1","test"), new Video("3", "test2")));
         String expectedJson = """
                 [
                 {
-                "videoId":"1"
+                "videoId":"1",
+                "title": "test"
                 },
                 {
-                "videoId":"3"
+                "videoId":"3",
+                "title": "test2"
                 }
                 ]
                 """;
@@ -53,12 +55,16 @@ class VideoControllerTest {
     void addNewVideo_ShouldReturnAddedVideo() throws Exception {
         //GIVEN
         String toPost = """ 
-                "5q"
+                {
+                "videoId":"5q",
+                "title": "test"
+                }
                 """;
         content().json(toPost);
         String expectedJson = """
                 {
-                "videoId":"5q"
+                "videoId":"5q",
+                "title": "test"
                 }
                 """;
         //WHEN
@@ -74,9 +80,12 @@ class VideoControllerTest {
     @DirtiesContext
     void addNewVideo_ShouldReturnStatusCode_409Conflict() throws Exception {
         //GIVEN
-        testRepo.save(new Video("5q"));
+        testRepo.save(new Video("5q","test"));
         String toPost = """ 
-                "5q"
+                {
+                "videoId":"5q",
+                "title": "test"
+                }
                 """;
         content().json(toPost);
         //WHEN
@@ -87,15 +96,34 @@ class VideoControllerTest {
         //THEN
 
     }
+    @Test
+    @DirtiesContext
+    void addNewVideo_ShouldReturnStatusCode_404BadRequest_IfElementHasEmptyId() throws Exception {
+        //GIVEN
+        String toPost = """ 
+                {
+                "videoId":"",
+                "title": "test"
+                }
+                """;
+        content().json(toPost);
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/videos")
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .content(toPost))
+                .andExpect(status().isBadRequest());
+        //THEN
 
+    }
     @Test
     @DirtiesContext
     void getSingleVideo_ShouldReturnSingleVideo() throws Exception {
         //GIVEN
-        testRepo.save(new Video("4"));
+        testRepo.save(new Video("4", "test"));
                 String expected= """
                         {
-                        "videoId":"4"
+                        "videoId":"4",
+                        "title": "test"
                         }
                         """;
         //WHEN
@@ -116,5 +144,27 @@ class VideoControllerTest {
 
         //THEN
 
+    }
+
+    @Test
+    @DirtiesContext
+    void removeSingleVideo_ShouldReturnTrue_IfVideoWasDeletedSuccessfully() throws Exception {
+        //GIVEN
+            testRepo.save(new Video("1", "test"));
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.delete( "/api/videos/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+        //THEN
+
+    }
+    @Test
+    @DirtiesContext
+    void removeSingleVideo_ShouldReturn_StatusCode404NotFound_IfVideoIdWasNotFound() throws Exception {
+        //GIVEN
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.delete( "/api/videos/1"))
+                .andExpect(status().isNotFound());
+        //THEN
     }
 }
