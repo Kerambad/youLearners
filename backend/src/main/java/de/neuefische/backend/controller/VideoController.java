@@ -35,6 +35,10 @@ public class VideoController {
     public Boolean removeSingleVideo(@PathVariable String videoId) {
         return videoService.removeSingleVideo(videoId);
     }
+    @PutMapping
+    public Video updateVideo(@RequestBody Video updateVideo) {
+        return videoService.updateVideo(updateVideo);
+    }
 
 }
 

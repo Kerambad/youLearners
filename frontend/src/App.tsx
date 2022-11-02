@@ -8,7 +8,7 @@ import Home from './components/Home';
 
 function App() {
 
-  const {addNewVideo, currentVideo, videos, fetchSingleVideo, removeVideoById} = useManageVideos();
+  const {addNewVideo, currentVideo, videos, fetchSingleVideo, removeVideoById, updateVideo} = useManageVideos();
   const {setRenderedComponent, activeComponent} = useActiveComponent();
 
   return (
@@ -16,8 +16,8 @@ function App() {
     <div className="vh-100">
       <VideoPlayer currentVideoId={currentVideo.videoId}/>
       <Home isActive={activeComponent} />
-      <VideoInsert setVideoIdFunction={addNewVideo} isActive={activeComponent} loadVideo={fetchSingleVideo }/>
-      <History isActive={activeComponent} allVideos={videos} loadVideo={fetchSingleVideo } removeById={removeVideoById}/>
+      <VideoInsert setVideoIdFunction={addNewVideo} isActive={activeComponent} loadVideo={fetchSingleVideo } />
+      <History isActive={activeComponent} allVideos={videos} loadVideo={fetchSingleVideo } removeById={removeVideoById} updateVideo={updateVideo}/>
       <Navbar setRenderComponentFunction={setRenderedComponent}/>
     </div>
   );

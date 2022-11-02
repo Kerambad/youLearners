@@ -24,10 +24,10 @@ public class VideoService {
     }
 
     public Video addNewVideo(Video newVideo) throws AlreadyExistsException {
-        if(videoRepo.existsById(newVideo.getVideoId())) {
+        if (videoRepo.existsById(newVideo.getVideoId())) {
             throw new AlreadyExistsException("Video with ID exists already: " + newVideo.getVideoId());
         }
-        if(newVideo.getVideoId().isEmpty()) {
+        if (newVideo.getVideoId().isEmpty()) {
             throw new IllegalArgumentException("VideoId can't be empty");
         }
         return videoRepo.save(newVideo);
@@ -38,10 +38,20 @@ public class VideoService {
     }
 
     public Boolean removeSingleVideo(String videoId) {
-        if(!videoRepo.existsById(videoId)) {
+        if (!videoRepo.existsById(videoId)) {
             throw new NoSuchElementException("VideoId dosen't exsists: " + videoId);
         }
         videoRepo.deleteById(videoId);
         return true;
+    }
+
+    public Video updateVideo(Video newVideo) {
+        if (!videoRepo.existsById(newVideo.getVideoId())) {
+            throw new NoSuchElementException("Id Not Found: " + newVideo.getVideoId());
+        }
+        if (newVideo.getTitle().isEmpty()) {
+            throw new IllegalArgumentException("Title is required.");
+        }
+        return videoRepo.save(newVideo);
     }
 }

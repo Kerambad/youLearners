@@ -6,12 +6,13 @@ type HistoryProps = {
     isActive: number
     allVideos: Video[]
     removeById: (videoId: string) => void
+    updateVideo: (newVideo: Video) => void
 }
 export default function History(props: HistoryProps) {
 
     const createHistoryElement = (singleVideo: Video) => {
         return (
-            <HistoryElement video={singleVideo} removeById={props.removeById} loadVideo={props.loadVideo} key={singleVideo.videoId} />
+            <HistoryElement video={singleVideo} removeById={props.removeById} loadVideo={props.loadVideo} key={singleVideo.videoId} updateVideo={props.updateVideo} />
         )
     }
 

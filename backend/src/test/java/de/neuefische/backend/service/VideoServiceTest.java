@@ -105,4 +105,33 @@ class VideoServiceTest {
         assertThrows(NoSuchElementException.class, () -> testService.removeSingleVideo("1"));
 
     }
+
+    @Test
+    void updateVideo_ShouldReturnSuccessfullyUpdatedVideo() {
+        //GIVEN
+        when(testRepo.existsById("1")).thenReturn(true);
+        when(testRepo.save(any())).thenReturn(testVideo1);
+        //WHEN
+        Video actual = testService.updateVideo(testVideo1);
+        //THEN
+        assertEquals(testVideo1Expected, actual);
+    }
+    @Test
+    void updateVideo_ShouldThrowIllegalArgumentException() {
+        //GIVEN
+       Video testVideo = new Video("1","");
+       when(testRepo.existsById("1")).thenReturn(true);
+        //WHEN
+        //THEN
+        assertThrows(IllegalArgumentException.class, () -> testService.updateVideo(testVideo));
+    }
+    @Test
+    void updateVideo_ShouldThrowNoSuchElementException_IfVideoIdWasNotFound() {
+        //GIVEN
+        when(testRepo.existsById("1")).thenReturn(false);
+        //WHEN
+        //THEN
+        assertThrows(NoSuchElementException.class, () -> testService.updateVideo(testVideo1));
+
+    }
 }

@@ -30,7 +30,7 @@ class VideoControllerTest {
     @Test
     @DirtiesContext
     void getCompleteHistory_ReturnsListOfVideoModels() throws Exception {
-        //GIVE
+        //GIVEN
         testRepo.saveAll(List.of(new Video("1","test"), new Video("3", "test2")));
         String expectedJson = """
                 [
@@ -52,7 +52,7 @@ class VideoControllerTest {
 
     @Test
     @DirtiesContext
-    void addNewVideo_ShouldReturnAddedVideo() throws Exception {
+    void addNewVideo_ShouldReturnAddedVideo_IfSaveWasSuccessfully() throws Exception {
         //GIVEN
         String toPost = """ 
                 {
@@ -164,6 +164,71 @@ class VideoControllerTest {
         //GIVEN
         //WHEN
         mockMvc.perform(MockMvcRequestBuilders.delete( "/api/videos/1"))
+                .andExpect(status().isNotFound());
+        //THEN
+    }
+
+    @Test
+    @DirtiesContext
+    void updateVideo_ShouldReturn_UpdatedVideo() throws Exception {
+        //GIVEN
+        testRepo.save(new Video("5q", "123"));
+        String toPut = """ 
+                {
+                "videoId":"5q",
+                "title": "test2"
+                }
+                """;
+        content().json(toPut);
+        String expectedJson = """
+                {
+                "videoId":"5q",
+                "title": "test2"
+                }
+                """;
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/videos")
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .content(toPut))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedJson));
+    }
+    @Test
+    @DirtiesContext
+    void updateVideo_ShouldReturnStatusCode_400BadRequest_IfUpdateVideoHasEmptyTitle() throws Exception {
+        //GIVEN
+        testRepo.save(new Video("5q", "123"));
+        String toPost = """ 
+                {
+                "videoId":"5q",
+                "title": ""
+                }
+                """;
+        content().json(toPost);
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/videos")
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .content(toPost))
+                .andExpect(status().isBadRequest());
+        //THEN
+
+    }
+    @Test
+    @DirtiesContext
+    void updateVideo_ShouldReturn_StatusCode404NotFound_IfVideoIdWasNotFound() throws Exception {
+        //GIVEN
+
+        String toPost = """ 
+                {
+                "videoId":"5q",
+                "title": "Hallo"
+                }
+                """;
+        content().json(toPost);
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.put( "/api/videos")
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .content(toPost))
                 .andExpect(status().isNotFound());
         //THEN
     }
