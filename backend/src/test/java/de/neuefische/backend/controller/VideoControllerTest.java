@@ -209,7 +209,8 @@ class VideoControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.put("/api/videos")
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .content(toPost))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Title is required."));
         //THEN
 
     }
@@ -229,7 +230,8 @@ class VideoControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.put( "/api/videos")
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .content(toPost))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andExpect(content().string("Id Not Found: 5q"));
         //THEN
     }
 }

@@ -30,7 +30,7 @@ export default function VideoInsert(props: VideoInsertProps) {
         return link.split("v=")[1]
     }
 
-    function handleFormSubmitt(action: React.FormEvent<HTMLFormElement>) {
+    function handleFormSubmit(action: React.FormEvent<HTMLFormElement>) {
         action.preventDefault();
         createNewVideo();
         setVideoId("");
@@ -41,7 +41,7 @@ export default function VideoInsert(props: VideoInsertProps) {
     return (
         <div className={"container text-center"}>
             <PreRenderVideo videoId={videoId} getVideoStatsFunction={(action) => setVideoTitle(action.target.videoTitle)} />
-            <form onSubmit={handleFormSubmitt}>
+            <form onSubmit={handleFormSubmit}>
                 <div className='form-floating my-1'>
                     <input
                         className={"form-control my-2 w-100"}
