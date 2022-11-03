@@ -4,7 +4,8 @@ import MarkElement from './MarkElement'
 
 type AllMarksGalleryProps = {
     marks: Mark[]
-    activeComponent: number;
+    activeComponent: number
+    loadVideo: (videoId:string) => void
 }
 
 export default function AllMarksGallery(props: AllMarksGalleryProps) {
@@ -31,7 +32,7 @@ export default function AllMarksGallery(props: AllMarksGalleryProps) {
                 />
                 <label htmlFor='filterTextInsert'>Filter</label>
             </div>
-            {filterMarks().map((mark, key) => <MarkElement mark={mark} key={key} />)}
+            {filterMarks().map((mark, key) => <MarkElement mark={mark} key={key} loadVideo={props.loadVideo} />)}
         </div>
     )
 }

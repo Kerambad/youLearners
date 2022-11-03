@@ -4,10 +4,6 @@ import { Video } from '../models/Video';
 
 export default function useManageVideos() {
   const [videos, setVideos] = useState([])
-  const [currentVideo, setCurrentVideo] = useState<Video>({
-    videoId: "",
-    title: ""
-  })
 
   useEffect(() => {
     fetchAllVideos();
@@ -23,7 +19,6 @@ export default function useManageVideos() {
   const addNewVideo = (newVideo: Video) => {
     axios.post("/api/videos", newVideo)
       .then((response) => response.data)
-      .then((data) => setCurrentVideo(data))
       .then(() => fetchAllVideos())
       .catch(() => fetchSingleVideo(newVideo.videoId));
   }
@@ -31,7 +26,6 @@ export default function useManageVideos() {
   const fetchSingleVideo = (videoId: string) => {
     axios.get("/api/videos/" + videoId)
       .then((responde) => responde.data)
-      .then((data) => setCurrentVideo(data))
       .catch((error) => console.log(error))
   }
 
@@ -47,5 +41,5 @@ export default function useManageVideos() {
       .catch((error) => console.log(error))
   }
 
-  return { videos, addNewVideo, currentVideo, fetchSingleVideo, removeVideoById, updateVideo }
+  return { videos, addNewVideo, fetchSingleVideo, removeVideoById, updateVideo}
 }
