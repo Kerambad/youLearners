@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SectionDTO {
-
+    private String dedicatedVideoId;
     private String name;
     private String time;
     private String endTime;

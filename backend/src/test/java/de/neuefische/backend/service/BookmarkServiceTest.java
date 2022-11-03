@@ -18,91 +18,106 @@ class BookmarkServiceTest {
     private final BookmarkService testService = new BookmarkService(testRepo, testIdService);
 
     //TestValues
+    Bookmark testBookmark1 = new Bookmark("1", "q1", "Test", 0);
+    BookmarkDTO testBookmark1DTO = new BookmarkDTO("q1", "Test", 0);
+    Bookmark expectedTestBookmark1 = new Bookmark("1", "q1", "Test", 0);
 
+    Bookmark testBookmark2 = new Bookmark("1", "q2", "tseT", 1);
+    Bookmark expectedTestBookmark2 = new Bookmark("1", "q2", "tseT", 1);
+
+    BookmarkDTO invalidTimeBookmarkDTO = new BookmarkDTO("1","Test", -1);
+    BookmarkDTO invalidNameBookmarkDTO = new BookmarkDTO("1","", 1);
+    BookmarkDTO invalidVideoIdBookmarkDTO = new BookmarkDTO("","Test", 1);
 
     @Test
     void getAllBookmarks_ShouldReturnAllBookmarks() {
         //GIVEN
-        List<Bookmark> testValues = List.of(new Bookmark("1", "Test", 100), new Bookmark("1", "tseT", 1));
+        List<Bookmark> testValues = List.of(testBookmark1,testBookmark2);
         when(testRepo.findAll()).thenReturn(testValues);
         //WHEN
         List<Bookmark> actual = testService.getAllBookmarks();
         //THEN
-        List<Bookmark> expected = List.of(new Bookmark("1", "Test", 100), new Bookmark("1", "tseT", 1));
+        List<Bookmark> expected = List.of(expectedTestBookmark1,expectedTestBookmark2);
         assertEquals(expected, actual);
     }
 
     @Test
     void addNewBookmark_ShouldReturnNewBookmark_IfTimeIs0() {
         //GIVEN
-        BookmarkDTO testBookmarkDTO = new BookmarkDTO("Test", 0);
         when(testIdService.createRandomId()).thenReturn("1");
-        when(testRepo.save(new Bookmark("1", "Test", 0))).thenReturn(new Bookmark("1", "Test", 0));
+        when(testRepo.save(testBookmark1)).thenReturn(testBookmark1);
         //WHEN
-        Bookmark actual = testService.addNewBookmark(testBookmarkDTO);
+        Bookmark actual = testService.addNewBookmark(testBookmark1DTO);
         //THEN
-        Bookmark expected = new Bookmark("1", "Test", 0);
         verify(testIdService).createRandomId();
-        assertEquals(expected, actual);
+        assertEquals(expectedTestBookmark1, actual);
     }
 
     @Test
     void addNewBookmark_ShouldThrowIllegalArgumentException_IfTimeIsLowerThen0() {
         //GIVEN
-        BookmarkDTO testBookmarkDTO = new BookmarkDTO("Test", -1);
         //WHEN
         //THEN
-        assertThrows(IllegalArgumentException.class, () -> testService.addNewBookmark(testBookmarkDTO));
+        assertThrows(IllegalArgumentException.class, () -> testService.addNewBookmark(invalidTimeBookmarkDTO));
     }
 
     @Test
     void addNewBookmark_ShouldThrowIllegalArgumentException_IfNameIsEmpty() {
         //GIVEN
-        BookmarkDTO testBookmarkDTO = new BookmarkDTO("", 1);
         //WHEN
         //THEN
-        assertThrows(IllegalArgumentException.class, () -> testService.addNewBookmark(testBookmarkDTO));
+        assertThrows(IllegalArgumentException.class, () -> testService.addNewBookmark(invalidNameBookmarkDTO));
+    }
+    @Test
+    void addNewBookmark_ShouldThrowIllegalArgumentException_IfVideoIdIsEmpty() {
+        //GIVEN
+        //WHEN
+        //THEN
+        assertThrows(IllegalArgumentException.class, () -> testService.addNewBookmark(invalidVideoIdBookmarkDTO));
     }
 
     @Test
     void updateBookmark_ShouldReturnUpdatedBookmark_IfTimeIs0() {
         //GIVEN
-        BookmarkDTO testBookmarkDTO = new BookmarkDTO("Test", 0);
         when(testRepo.existsById("1")).thenReturn(true);
-        when(testRepo.save(new Bookmark("1", "Test", 0))).thenReturn(new Bookmark("1", "Test", 0));
+        when(testRepo.save(testBookmark1)).thenReturn(testBookmark1);
         //WHEN
-        Bookmark actual = testService.updateBookmark("1", testBookmarkDTO);
+        Bookmark actual = testService.updateBookmark("1", testBookmark1DTO);
         //THEN
-        Bookmark expected = new Bookmark("1", "Test", 0);
-        assertEquals(expected, actual);
+        assertEquals(expectedTestBookmark1, actual);
     }
+
     @Test
     void updateBookmark_ShouldThrowNoSuchElementException_IfBookmarkWasNotFound() {
         //GIVEN
         String testId = "1";
-        BookmarkDTO testBookmarkDTO = new BookmarkDTO("Test", 1);
         when(testRepo.existsById("1")).thenReturn(false);
         //WHEN
         //THEN
-        assertThrows(NoSuchElementException.class, () -> testService.updateBookmark(testId, testBookmarkDTO));
+        assertThrows(NoSuchElementException.class, () -> testService.updateBookmark(testId, testBookmark1DTO));
     }
 
     @Test
     void updateBookmark_ShouldThrowIllegalArgumentException_IfTimeIsLowerThen0() {
         //GIVEN
-        BookmarkDTO testBookmarkDTO = new BookmarkDTO("Test", -1);
         //WHEN
         //THEN
-        assertThrows(IllegalArgumentException.class, () -> testService.updateBookmark("1", testBookmarkDTO));
+        assertThrows(IllegalArgumentException.class, () -> testService.updateBookmark("1", invalidTimeBookmarkDTO));
     }
 
     @Test
     void updateBookmark_ShouldThrowIllegalArgumentException_IfNameIsEmpty() {
         //GIVEN
-        BookmarkDTO testBookmarkDTO = new BookmarkDTO("", 1);
         //WHEN
         //THEN
-        assertThrows(IllegalArgumentException.class, () -> testService.updateBookmark("1", testBookmarkDTO));
+        assertThrows(IllegalArgumentException.class, () -> testService.updateBookmark("1", invalidNameBookmarkDTO));
+    }
+    @Test
+    void updateBookmark_ShouldThrowIllegalArgumentException_IfVideoIdIsEmpty() {
+        //GIVEN
+        //WHEN
+        //THEN
+        assertThrows(IllegalArgumentException.class, () -> testService.updateBookmark("1", invalidVideoIdBookmarkDTO));
     }
 
     @Test

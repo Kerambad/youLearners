@@ -30,6 +30,7 @@ public class BookmarkService {
         checkIfNameAndTimeIsValid(newBookmark);
         Bookmark newBookmarkWithId = new Bookmark(
             idService.createRandomId(),
+                newBookmark.getDedicatedVideoId(),
                 newBookmark.getName(),
                 newBookmark.getTime()
         );
@@ -43,6 +44,7 @@ public class BookmarkService {
         }
         Bookmark updatedBookmark = new Bookmark(
                 id,
+                newBookmark.getDedicatedVideoId(),
                 newBookmark.getName(),
                 newBookmark.getTime()
                 );
@@ -63,6 +65,9 @@ public class BookmarkService {
         }
         if(newBookmark.getName().isEmpty()) {
             throw new IllegalArgumentException("Name can't be empty");
+        }
+        if(newBookmark.getDedicatedVideoId().isEmpty()) {
+            throw new IllegalArgumentException("VideoId can't be empty");
         }
     }
 }

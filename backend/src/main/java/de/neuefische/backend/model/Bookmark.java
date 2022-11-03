@@ -15,6 +15,7 @@ public class Bookmark{
     @Id
     private String bookmarkId;
 
+    private String dedicatedVideoId;
     private String name;
     private int time;
 

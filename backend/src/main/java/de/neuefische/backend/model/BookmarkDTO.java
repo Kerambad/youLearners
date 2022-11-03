@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookmarkDTO {
-
+    private String dedicatedVideoId;
     private String name;
     private int time;
 

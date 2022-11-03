@@ -5,10 +5,13 @@ import VideoPlayer from './components/VideoPlayer';
 import useActiveComponent from './hooks/useActiveComponent';
 import useManageVideos from './hooks/useManageVideos';
 import Home from './components/Home';
+import AllMarksGallery from './components/AllMarksGallery';
+import useManageMarks from './hooks/useManageMarks';
 
 function App() {
 
   const {addNewVideo, currentVideo, videos, fetchSingleVideo, removeVideoById, updateVideo} = useManageVideos();
+  const {marks} = useManageMarks();
   const {setRenderedComponent, activeComponent} = useActiveComponent();
 
   return (
@@ -18,6 +21,7 @@ function App() {
       <Home isActive={activeComponent} />
       <VideoInsert setVideoIdFunction={addNewVideo} isActive={activeComponent} loadVideo={fetchSingleVideo } />
       <History isActive={activeComponent} allVideos={videos} loadVideo={fetchSingleVideo } removeById={removeVideoById} updateVideo={updateVideo}/>
+      <AllMarksGallery marks={marks} activeComponent={activeComponent}/>
       <Navbar setRenderComponentFunction={setRenderedComponent}/>
     </div>
   );

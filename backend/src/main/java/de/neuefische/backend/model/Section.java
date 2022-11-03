@@ -15,6 +15,7 @@ public class Section {
     @Id
     private String markId;
 
+    private String dedicatedVideoId;
     private String name;
     private String time;
     private String endTime;
