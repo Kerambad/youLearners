@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
+import { LoadVideo } from '../models/LoadVideo'
 import { Video } from '../models/Video'
 import PreRenderVideo from './PreRenderVideo'
 
 
 type VideoInsertProps = {
     setVideoIdFunction: (video: Video) => void
-    loadVideo: (videoId: string) => void
     isActive: number
+    loadVideoOptions: (videoOptions: LoadVideo) => void
 }
 export default function VideoInsert(props: VideoInsertProps) {
 

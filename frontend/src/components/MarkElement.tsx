@@ -1,17 +1,16 @@
 import React from 'react'
 import { Mark } from '../models/Mark'
-import { VideoPlayOptions } from '../models/VideoPlayOptions'
+import { LoadVideo } from '../models/LoadVideo'
 
 type MarkElementProps = {
     mark: Mark
-    loadVideo: (videoId: string) => void
-    loadVideoOptions: (videoOptions: VideoPlayOptions) => void
+    loadVideoOptions: (videoOptions: LoadVideo) => void
 }
 
 export default function MarkElement(props: MarkElementProps) {
     function handleLoadMark() {
-        props.loadVideo(props.mark.dedicatedVideoId)
         props.loadVideoOptions({
+            videoId: props.mark.dedicatedVideoId,
             startTime: props.mark.time,
             autoplay: true
         })

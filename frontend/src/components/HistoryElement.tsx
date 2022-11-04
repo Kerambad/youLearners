@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import { Video } from '../models/Video'
-import { VideoPlayOptions } from '../models/VideoPlayOptions'
+import { LoadVideo } from '../models/LoadVideo'
 
 type HistoryElementProps = {
     video: Video
     removeById: (videoId: string) => void
-    loadVideo: (videoId: string) => void
     updateVideo: (newVideo: Video) => void
-    loadVideoOptions: (videoOptions: VideoPlayOptions) => void
+    loadVideoOptions: (videoOptions: LoadVideo) => void
 }
 
 export default function HistoryElement(props: HistoryElementProps) {
@@ -16,8 +15,8 @@ export default function HistoryElement(props: HistoryElementProps) {
     const [newTitle, setNewTitle] = useState(props.video.title)
 
     function handleLoadMark() {
-        props.loadVideo(props.video.videoId)
         props.loadVideoOptions({
+            videoId: props.video.videoId,
             startTime: 0,
             autoplay: false
         })

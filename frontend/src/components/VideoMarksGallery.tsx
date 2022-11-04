@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 import { Mark } from '../models/Mark'
-import { VideoPlayOptions } from '../models/VideoPlayOptions'
+import { LoadVideo } from '../models/LoadVideo'
 import CreateNewMark from './CreateNewMark'
 import MarkElement from './MarkElement'
+import { CurrentVideoStats } from '../models/CurrentVideoStats'
 
 type VideoMarksGalleryProps = {
     marks: Mark[]
     activeComponent: number
-    loadVideo: (videoId: string) => void
-    loadVideoOptions: (videoOptions: VideoPlayOptions) => void
+    loadVideoOptions: (videoOptions: LoadVideo) => void
+    currentVideoStats: CurrentVideoStats
 }
 
 export default function VideoMarksGallery(props: VideoMarksGalleryProps) {
@@ -18,7 +19,7 @@ export default function VideoMarksGallery(props: VideoMarksGalleryProps) {
 
     function filterMarks() {
         return (
-            props.marks.filter((mark) => mark.name.toLowerCase()
+            props.marks.filter((mark) => mark.dedicatedVideoId === props.currentVideoStats.videoId).filter((mark) => mark.name.toLowerCase()
                 .includes(filterText.toLowerCase())))
     }
 
@@ -40,7 +41,7 @@ export default function VideoMarksGallery(props: VideoMarksGalleryProps) {
                     <button className='col-6 btn btn-danger w-50' onClick={() => setRenderAddComponent(true)}>Add Video</button>
                 </div>
             </div>
-            {filterMarks().map((mark, key) => <MarkElement mark={mark} key={key} loadVideo={props.loadVideo} loadVideoOptions={props.loadVideoOptions} />)}
+            {filterMarks().map((mark, key) => <MarkElement mark={mark} key={key} loadVideoOptions={props.loadVideoOptions} />)}
         </div>
     )
 }

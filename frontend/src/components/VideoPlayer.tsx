@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import YouTube, { YouTubeProps } from 'react-youtube'
-import { VideoPlayOptions } from '../models/VideoPlayOptions';
+import YouTube, { YouTubeEvent, YouTubeProps } from 'react-youtube'
+import { CurrentVideoStats } from '../models/CurrentVideoStats';
+import { LoadVideo } from '../models/LoadVideo';
 
 type VideoPlayerProps = {
-    currentVideoId: string;
-    videoPlayOptions: VideoPlayOptions
+    videoPlayOptions: LoadVideo
+    setCurentVideoStats: (videoStats: CurrentVideoStats) => void
 }
 
 export default function VideoPlayer(props: VideoPlayerProps) {
-
 
     const [player, setPlayer] = useState<any>();
     let isAllreadyPlayed: boolean = false
@@ -31,7 +31,6 @@ export default function VideoPlayer(props: VideoPlayerProps) {
         if (e.data === -1) {
             isAllreadyPlayed = false;
         }
-        if ()
         if (e.data === 1 && !isAllreadyPlayed) {
             goToTime(props.videoPlayOptions.startTime);
             isAllreadyPlayed = true
@@ -46,13 +45,24 @@ export default function VideoPlayer(props: VideoPlayerProps) {
         }
     }
 
+    function loadVideoStats (action: YouTubeEvent) {
+        if(action){
+        props.setCurentVideoStats({
+            videoId: props.videoPlayOptions.videoId,
+            currentTime: 0,
+            title: action.target.videoTitle
+        })
+    }
+    }
+
 
     return (
         <>
             <YouTube
                 className='ratio ratio-16x9'
-                videoId={props.currentVideoId}
+                videoId={props.videoPlayOptions.videoId}
                 onStateChange={(e) => actionHandler(e)}
+                onReady={(action) => loadVideoStats(action)}
                 opts={playOptions}
             />
 

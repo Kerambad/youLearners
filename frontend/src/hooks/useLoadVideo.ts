@@ -1,16 +1,20 @@
 import { useState } from "react";
-import { VideoPlayOptions } from "../models/VideoPlayOptions";
+import { CurrentVideoStats } from "../models/CurrentVideoStats";
+import { LoadVideo } from "../models/LoadVideo";
 
 export default function useLoadVideo() {
-    const [currentVideoId, setCurrentVideoId] = useState("");
-    const [videoPlayOptions, setVideoPlayOptions] = useState<VideoPlayOptions>({
+    const [videoPlayOptions, setVideoPlayOptions] = useState<LoadVideo>({
+        videoId: "",
         startTime: 0,
         autoplay: false
     });
+const [curentVideoStats, setCurentVideoStats] = useState<CurrentVideoStats>({
+    videoId: "",
+    currentTime: 0,
+    title: ""
+})
+    
 
-    function loadVideoById(videoId:string) {
-        setCurrentVideoId(videoId);
-    }
 
-    return {currentVideoId, loadVideoById, setVideoPlayOptions, videoPlayOptions}
+    return {setVideoPlayOptions, videoPlayOptions, setCurentVideoStats,curentVideoStats}
 }
