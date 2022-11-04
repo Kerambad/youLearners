@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { Video } from '../models/Video'
+import { VideoPlayOptions } from '../models/VideoPlayOptions'
 
 type HistoryElementProps = {
     video: Video
     removeById: (videoId: string) => void
     loadVideo: (videoId: string) => void
     updateVideo: (newVideo: Video) => void
+    loadVideoOptions: (videoOptions: VideoPlayOptions) => void
 }
 
 export default function HistoryElement(props: HistoryElementProps) {
@@ -13,6 +15,13 @@ export default function HistoryElement(props: HistoryElementProps) {
     const [renderEdit, setRenderEdit] = useState(false)
     const [newTitle, setNewTitle] = useState(props.video.title)
 
+    function handleLoadMark() {
+        props.loadVideo(props.video.videoId)
+        props.loadVideoOptions({
+            startTime: 0,
+            autoplay: false
+        })
+    }
     function editField() {
 
         function submitHandler(action: React.FormEvent<HTMLFormElement>) {
@@ -24,6 +33,8 @@ export default function HistoryElement(props: HistoryElementProps) {
             })
             setRenderEdit(false)
         }
+
+        
 
         if (!renderEdit) return null;
         return (
@@ -53,7 +64,7 @@ export default function HistoryElement(props: HistoryElementProps) {
         <>
             <div className='row m-1 px-0 py-1 border border-dark'>
                 <div className='col-8 overflow-scroll p-1' style={{ height: '3em' }} >
-                    <p onClick={() => props.loadVideo(props.video.videoId)}>{props.video.title}</p>
+                    <p onClick={() => handleLoadMark()}>{props.video.title}</p>
                 </div>
                 <div className='col-2 py-0 px-0' onClick={() => setRenderEdit(true)}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="90%" height="100%" fill="currentColor" className="bi bi-pencil border border-dark border-2 rounded p-2" viewBox="0 0 16 16">
@@ -69,4 +80,5 @@ export default function HistoryElement(props: HistoryElementProps) {
             {editField()}
         </>
     )
+
 }

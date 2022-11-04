@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import YouTube, { YouTubeProps } from 'react-youtube'
-import { videoPlayOptions } from '../models/VideoPlayOptions';
+import { VideoPlayOptions } from '../models/VideoPlayOptions';
 
 type VideoPlayerProps = {
     currentVideoId: string;
-    videoPlayOptions: videoPlayOptions
+    videoPlayOptions: VideoPlayOptions
 }
 
 export default function VideoPlayer(props: VideoPlayerProps) {
 
-    const [toggleplayFunction, setTogglePlayFunction] = useState(false)
+
+    const [player, setPlayer] = useState<any>();
+    let isAllreadyPlayed: boolean = false
 
     function getAutoplay(): number {
         if (props.videoPlayOptions.autoplay) {
@@ -24,30 +26,34 @@ export default function VideoPlayer(props: VideoPlayerProps) {
             fs: 0
         },
     };
+    const actionHandler = (e: any) => {
+        setPlayer(e.target);
+        if (e.data === -1) {
+            isAllreadyPlayed = false;
+        }
+        if ()
+        if (e.data === 1 && !isAllreadyPlayed) {
+            goToTime(props.videoPlayOptions.startTime);
+            isAllreadyPlayed = true
+        }
+        console.log(e);
+    };
 
-    const onReady: YouTubeProps['onReady'] = (event) => {
-        if (props.videoPlayOptions.startTime !== 0) {
-            event.target.pauseVideo()
-            console.log(event.target);
-
+    function goToTime(time: number) {
+        if (player) {
+            player.playVideo()
+            player.seekTo(time, "seconds");
         }
     }
 
-    const onPlay: YouTubeProps['onPlay'] = (event) => {
-        event.target.seekTo(props.videoPlayOptions.startTime, false)
-    }
-
-console.log(toggleplayFunction);
 
     return (
         <>
             <YouTube
                 className='ratio ratio-16x9'
                 videoId={props.currentVideoId}
-                onStateChange={(e) => console.log(e.target)}
+                onStateChange={(e) => actionHandler(e)}
                 opts={playOptions}
-                onReady={onReady}
-                onPlay={onPlay}
             />
 
         </>
