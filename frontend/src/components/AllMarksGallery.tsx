@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Mark } from '../models/Mark'
 import { LoadVideo } from '../models/LoadVideo'
 import MarkElement from './MarkElement'
+import { CurrentVideoStats } from '../models/CurrentVideoStats'
 
 type AllMarksGalleryProps = {
     marks: Mark[]
@@ -9,6 +10,8 @@ type AllMarksGalleryProps = {
     loadVideoOptions: (videoOptions: LoadVideo) => void
     removeMarkById:(videoId: string) => void
     editMark: (markId: string, markToEdit: Mark) => void
+    player: any
+    currentVideoStats: CurrentVideoStats
 }
 
 export default function AllMarksGallery(props: AllMarksGalleryProps) {
@@ -35,7 +38,7 @@ export default function AllMarksGallery(props: AllMarksGalleryProps) {
                 />
                 <label htmlFor='filterTextInsert'>Filter</label>
             </div>
-            {filterMarks().map((mark, key) => <MarkElement mark={mark} key={key} loadVideoOptions={props.loadVideoOptions} removeById={props.removeMarkById} editMark={props.editMark}/>)}
+            {filterMarks().map((mark, key) => <MarkElement mark={mark} key={key} loadVideoOptions={props.loadVideoOptions} removeById={props.removeMarkById} editMark={props.editMark} player={props.player} currentVideoStats={props.currentVideoStats}/>)}
         </div>
     )
 }

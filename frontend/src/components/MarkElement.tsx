@@ -2,28 +2,40 @@ import React, { useState } from 'react'
 import { Mark } from '../models/Mark'
 import { LoadVideo } from '../models/LoadVideo'
 import EditMark from './EditMark'
+import { CurrentVideoStats } from '../models/CurrentVideoStats'
 
 type MarkElementProps = {
     mark: Mark
     loadVideoOptions: (videoOptions: LoadVideo) => void
     removeById: (bookmarkId: string) => void
     editMark: (markId: string, markToEdit: Mark) => void
+    player: any
+    currentVideoStats: CurrentVideoStats
 }
 
 export default function MarkElement(props: MarkElementProps) {
-    const [isEditActive,setIsEditActive] = useState(false)
+    const [isEditActive, setIsEditActive] = useState(false)
 
     function handleLoadMark() {
-        props.loadVideoOptions({
-            videoId: props.mark.dedicatedVideoId,
-            startTime: props.mark.time,
-            autoplay: true
-        })
+        if (props.currentVideoStats.videoId !== props.mark.dedicatedVideoId) {
+            props.loadVideoOptions({
+                videoId: props.mark.dedicatedVideoId,
+                startTime: props.mark.time,
+                autoplay: true
+            })
+            console.log("Umweg");
+        }
+        else {
+            props.player.seekTo(props.mark.time, "seconds");
+            props.player.playVideo();
+            console.log("direkt");
+        }
+
     }
 
-    function handleDeleteMark () {
+    function handleDeleteMark() {
         props.mark.bookmarkId && props.removeById(props.mark.bookmarkId)
-        
+
     }
     return (
         <>
@@ -43,7 +55,7 @@ export default function MarkElement(props: MarkElementProps) {
                     </svg>
                 </div>
             </div>
-            <EditMark isActive={isEditActive} exsistingMark={props.mark} setIsActive={setIsEditActive} editMark={props.editMark}/>
+            <EditMark isActive={isEditActive} exsistingMark={props.mark} setIsActive={setIsEditActive} editMark={props.editMark} />
         </>
     )
 }
