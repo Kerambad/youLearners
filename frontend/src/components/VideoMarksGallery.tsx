@@ -13,12 +13,14 @@ type VideoMarksGalleryProps = {
     addNewMark: (newMark: Mark) => void
     removeMarkById: (markId: string) => void
     editMark: (markId: string, markToEdit: Mark) => void
+    getTime: () => number
 }
 
 export default function VideoMarksGallery(props: VideoMarksGalleryProps) {
 
     const [filterText, setFilterText] = useState("")
     const [renderAddComponent, setRenderAddComponent] = useState(false)
+    const [curTime, setCurTime] = useState("")
 
     function filterMarks() {
         return (
@@ -43,6 +45,8 @@ export default function VideoMarksGallery(props: VideoMarksGalleryProps) {
                 </div>
                     <button className='col-6 btn btn-danger' onClick={() => setRenderAddComponent(true)}>Add Mark</button>
             {filterMarks().map((mark, key) => <MarkElement mark={mark} key={key} loadVideoOptions={props.loadVideoOptions} removeById={props.removeMarkById} editMark={props.editMark}/>)}
+            <p>{curTime}</p>
+            <button onClick={() => setCurTime(props.getTime().toString())}></button>
         </div>
     )
 }

@@ -1,11 +1,16 @@
-import React, { useState } from 'react'
+import React, { Ref, useImperativeHandle, useState } from 'react'
 import YouTube, { YouTubeEvent, YouTubeProps } from 'react-youtube'
 import { CurrentVideoStats } from '../models/CurrentVideoStats';
 import { LoadVideo } from '../models/LoadVideo';
 
+export interface RefObject {
+    getTime: () => number
+}
+
 type VideoPlayerProps = {
     videoPlayOptions: LoadVideo
     setCurentVideoStats: (videoStats: CurrentVideoStats) => void
+    ref: Ref<RefObject>
 }
 
 export default function VideoPlayer(props: VideoPlayerProps) {
@@ -45,15 +50,23 @@ export default function VideoPlayer(props: VideoPlayerProps) {
         }
     }
 
-    function loadVideoStats (action: YouTubeEvent) {
-        if(action){
-        props.setCurentVideoStats({
-            videoId: props.videoPlayOptions.videoId,
-            currentTime: 0,
-            title: action.target.videoTitle
-        })
+    function loadVideoStats(action: YouTubeEvent) {
+        if (action) {
+            props.setCurentVideoStats({
+                videoId: props.videoPlayOptions.videoId,
+                currentTime: 0,
+                title: action.target.videoTitle
+            })
+        }
     }
+
+    useImperativeHandle(props.ref, () => ({ getTime }));
+
+
+    const getTime = (): number => {
+        return player.getCurrentTime()
     }
+
 
 
     return (
@@ -65,7 +78,6 @@ export default function VideoPlayer(props: VideoPlayerProps) {
                 onReady={(action) => loadVideoStats(action)}
                 opts={playOptions}
             />
-
         </>
     )
 

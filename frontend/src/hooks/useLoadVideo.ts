@@ -8,11 +8,14 @@ export default function useLoadVideo() {
         startTime: 0,
         autoplay: false
     });
+
 const [curentVideoStats, setCurentVideoStats] = useState<CurrentVideoStats>({
     videoId: "",
     currentTime: 0,
     title: ""
 })
+
+
     
 
 

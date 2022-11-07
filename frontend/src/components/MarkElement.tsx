@@ -23,7 +23,6 @@ export default function MarkElement(props: MarkElementProps) {
 
     function handleDeleteMark () {
         props.mark.bookmarkId && props.removeById(props.mark.bookmarkId)
-        console.log(props.mark.bookmarkId);
         
     }
     return (
