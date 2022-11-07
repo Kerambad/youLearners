@@ -1,18 +1,19 @@
 import { Video } from '../models/Video'
+import { LoadVideo } from '../models/LoadVideo'
 import HistoryElement from './HistoryElement'
 
 type HistoryProps = {
-    loadVideo: (videoId: string) => void
     isActive: number
     allVideos: Video[]
     removeById: (videoId: string) => void
     updateVideo: (newVideo: Video) => void
+    loadVideoOptions: (videoOptions: LoadVideo) => void
 }
 export default function History(props: HistoryProps) {
 
     const createHistoryElement = (singleVideo: Video) => {
         return (
-            <HistoryElement video={singleVideo} removeById={props.removeById} loadVideo={props.loadVideo} key={singleVideo.videoId} updateVideo={props.updateVideo} />
+            <HistoryElement video={singleVideo} removeById={props.removeById} key={singleVideo.videoId} updateVideo={props.updateVideo} loadVideoOptions={props.loadVideoOptions}/>
         )
     }
 

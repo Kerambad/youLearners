@@ -4,20 +4,27 @@ import History from './components/History';
 import VideoPlayer from './components/VideoPlayer';
 import useActiveComponent from './hooks/useActiveComponent';
 import useManageVideos from './hooks/useManageVideos';
-import Home from './components/Home';
+import AllMarksGallery from './components/AllMarksGallery';
+import useManageMarks from './hooks/useManageMarks';
+import useLoadVideo from './hooks/useLoadVideo';
+import VideoMarksGallery from './components/VideoMarksGallery';
+
 
 function App() {
 
-  const {addNewVideo, currentVideo, videos, fetchSingleVideo, removeVideoById, updateVideo} = useManageVideos();
+  const {addNewVideo, videos, removeVideoById, updateVideo} = useManageVideos();
+  const {marks, addNewMark, removeMarkById, updateMark} = useManageMarks();
   const {setRenderedComponent, activeComponent} = useActiveComponent();
+  const {videoPlayOptions, setVideoPlayOptions, curentVideoStats, setCurentVideoStats} = useLoadVideo();
 
   return (
 
     <div className="vh-100">
-      <VideoPlayer currentVideoId={currentVideo.videoId}/>
-      <Home isActive={activeComponent} />
-      <VideoInsert setVideoIdFunction={addNewVideo} isActive={activeComponent} loadVideo={fetchSingleVideo } />
-      <History isActive={activeComponent} allVideos={videos} loadVideo={fetchSingleVideo } removeById={removeVideoById} updateVideo={updateVideo}/>
+      <VideoPlayer videoPlayOptions={videoPlayOptions} setCurentVideoStats={setCurentVideoStats}/>
+      <VideoMarksGallery marks={marks} activeComponent={activeComponent} loadVideoOptions={setVideoPlayOptions} currentVideoStats={curentVideoStats} addNewMark={addNewMark} removeMarkById={removeMarkById} editMark={updateMark}/>
+      <VideoInsert setVideoIdFunction={addNewVideo} isActive={activeComponent} loadVideoOptions={setVideoPlayOptions}/>
+      <History isActive={activeComponent} allVideos={videos} removeById={removeVideoById} updateVideo={updateVideo} loadVideoOptions={setVideoPlayOptions}/>
+      <AllMarksGallery marks={marks} activeComponent={activeComponent} loadVideoOptions={setVideoPlayOptions} removeMarkById={removeMarkById} editMark={updateMark}/>
       <Navbar setRenderComponentFunction={setRenderedComponent}/>
     </div>
   );
