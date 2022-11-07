@@ -5,6 +5,7 @@ type CreateNewMarkProps = {
   setRenderAddComponent: (state: boolean) => void
   addNewMark: (newMark: Mark) => void
   currentVideoStats: CurrentVideoStats
+  player: any
 }
 
 export default function CreateNewMark(props: CreateNewMarkProps) {
@@ -34,6 +35,13 @@ export default function CreateNewMark(props: CreateNewMarkProps) {
     setFormValues(emptyFormPlaceholder)
   }
 
+  function handleSetCurrentTime(name: string) {
+    if(props.player) {
+      let elapsedTime: number = props.player.getCurrentTime()
+      setFormValues((old) => ({ ...old, [name]: elapsedTime }))
+    }
+  }
+
   return (
     <div>
       <form onSubmit={(action) => handleFormSubmit(action)}>
@@ -56,18 +64,26 @@ export default function CreateNewMark(props: CreateNewMarkProps) {
           />
           <label htmlFor='idInsert'>Name</label>
         </div>
-        <div className='form-floating my-1' >
-          <input
-            className={"form-control my-2 w-100"}
-            id='idInsert'
-            type={"number"}
-            placeholder="Start-Time"
-            value={formValues.time}
-            name="time"
-            onChange={(action) => handleFormInput(action)}
-            required={true}
-          />
-          <label htmlFor='idInsert'>Start-Time</label>
+        <div className='row'>
+          <div className='col-9'>
+            <div className='form-floating my-1' >
+              <input
+                className={"form-control my-2 w-100"}
+                id='idInsert'
+                type={"number"}
+                placeholder="Start-Time"
+                value={formValues.time}
+                name="time"
+                onChange={(action) => handleFormInput(action)}
+                required={true}
+              />
+              <label htmlFor='idInsert'>Start-Time</label>
+            </div>
+          </div>
+          <div className="col-auto">
+            <input type="checkbox" className="btn-check" id="btn-check" autoComplete="off" checked={false} onClick={() => handleSetCurrentTime("time")} readOnly/>
+              <label className="btn btn-primary w-100" htmlFor="btn-check" >Time</label>
+          </div>
         </div>
         <div className='form-floating my-1' >
           <input
