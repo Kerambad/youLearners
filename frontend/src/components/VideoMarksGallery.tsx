@@ -10,6 +10,9 @@ type VideoMarksGalleryProps = {
     activeComponent: number
     loadVideoOptions: (videoOptions: LoadVideo) => void
     currentVideoStats: CurrentVideoStats
+    addNewMark: (newMark: Mark) => void
+    removeMarkById: (markId: string) => void
+    editMark: (markId: string, markToEdit: Mark) => void
 }
 
 export default function VideoMarksGallery(props: VideoMarksGalleryProps) {
@@ -24,11 +27,10 @@ export default function VideoMarksGallery(props: VideoMarksGalleryProps) {
     }
 
     if (props.activeComponent !== 0) return null;
-    if (renderAddComponent) return <CreateNewMark setRenderAddComponent={setRenderAddComponent}/>;
+    if (renderAddComponent) return <CreateNewMark setRenderAddComponent={setRenderAddComponent} addNewMark={props.addNewMark} currentVideoStats={props.currentVideoStats}/>;
     return (
         <div>
-            <div className='row'>
-                <div className='col-6 form-floating my-1'>
+                <div className='col-6 form-floating'>
                     <input
                         className={"form-control my-2 w-100"}
                         id='filterTextInsert'
@@ -38,10 +40,9 @@ export default function VideoMarksGallery(props: VideoMarksGalleryProps) {
                         onChange={(action) => setFilterText(action.target.value)}
                     />
                     <label htmlFor='filterTextInsert'>Filter</label>
-                    <button className='col-6 btn btn-danger w-50' onClick={() => setRenderAddComponent(true)}>Add Video</button>
                 </div>
-            </div>
-            {filterMarks().map((mark, key) => <MarkElement mark={mark} key={key} loadVideoOptions={props.loadVideoOptions} />)}
+                    <button className='col-6 btn btn-danger' onClick={() => setRenderAddComponent(true)}>Add Mark</button>
+            {filterMarks().map((mark, key) => <MarkElement mark={mark} key={key} loadVideoOptions={props.loadVideoOptions} removeById={props.removeMarkById} editMark={props.editMark}/>)}
         </div>
     )
 }

@@ -7,6 +7,8 @@ type AllMarksGalleryProps = {
     marks: Mark[]
     activeComponent: number
     loadVideoOptions: (videoOptions: LoadVideo) => void
+    removeMarkById:(videoId: string) => void
+    editMark: (markId: string, markToEdit: Mark) => void
 }
 
 export default function AllMarksGallery(props: AllMarksGalleryProps) {
@@ -33,7 +35,7 @@ export default function AllMarksGallery(props: AllMarksGalleryProps) {
                 />
                 <label htmlFor='filterTextInsert'>Filter</label>
             </div>
-            {filterMarks().map((mark, key) => <MarkElement mark={mark} key={key} loadVideoOptions={props.loadVideoOptions}/>)}
+            {filterMarks().map((mark, key) => <MarkElement mark={mark} key={key} loadVideoOptions={props.loadVideoOptions} removeById={props.removeMarkById} editMark={props.editMark}/>)}
         </div>
     )
 }

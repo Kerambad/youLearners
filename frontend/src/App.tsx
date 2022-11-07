@@ -9,10 +9,11 @@ import useManageMarks from './hooks/useManageMarks';
 import useLoadVideo from './hooks/useLoadVideo';
 import VideoMarksGallery from './components/VideoMarksGallery';
 
+
 function App() {
 
-  const {addNewVideo, videos, fetchSingleVideo, removeVideoById, updateVideo} = useManageVideos();
-  const {marks} = useManageMarks();
+  const {addNewVideo, videos, removeVideoById, updateVideo} = useManageVideos();
+  const {marks, addNewMark, removeMarkById, updateMark} = useManageMarks();
   const {setRenderedComponent, activeComponent} = useActiveComponent();
   const {videoPlayOptions, setVideoPlayOptions, curentVideoStats, setCurentVideoStats} = useLoadVideo();
 
@@ -20,10 +21,10 @@ function App() {
 
     <div className="vh-100">
       <VideoPlayer videoPlayOptions={videoPlayOptions} setCurentVideoStats={setCurentVideoStats}/>
-      <VideoMarksGallery marks={marks} activeComponent={activeComponent} loadVideoOptions={setVideoPlayOptions} currentVideoStats={curentVideoStats}/>
+      <VideoMarksGallery marks={marks} activeComponent={activeComponent} loadVideoOptions={setVideoPlayOptions} currentVideoStats={curentVideoStats} addNewMark={addNewMark} removeMarkById={removeMarkById} editMark={updateMark}/>
       <VideoInsert setVideoIdFunction={addNewVideo} isActive={activeComponent} loadVideoOptions={setVideoPlayOptions}/>
       <History isActive={activeComponent} allVideos={videos} removeById={removeVideoById} updateVideo={updateVideo} loadVideoOptions={setVideoPlayOptions}/>
-      <AllMarksGallery marks={marks} activeComponent={activeComponent} loadVideoOptions={setVideoPlayOptions}/>
+      <AllMarksGallery marks={marks} activeComponent={activeComponent} loadVideoOptions={setVideoPlayOptions} removeMarkById={removeMarkById} editMark={updateMark}/>
       <Navbar setRenderComponentFunction={setRenderedComponent}/>
     </div>
   );

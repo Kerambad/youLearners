@@ -1,19 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Mark } from '../models/Mark'
 import { LoadVideo } from '../models/LoadVideo'
+import EditMark from './EditMark'
 
 type MarkElementProps = {
     mark: Mark
     loadVideoOptions: (videoOptions: LoadVideo) => void
+    removeById: (bookmarkId: string) => void
+    editMark: (markId: string, markToEdit: Mark) => void
 }
 
 export default function MarkElement(props: MarkElementProps) {
+    const [isEditActive,setIsEditActive] = useState(false)
+
     function handleLoadMark() {
         props.loadVideoOptions({
             videoId: props.mark.dedicatedVideoId,
             startTime: props.mark.time,
             autoplay: true
         })
+    }
+
+    function handleDeleteMark () {
+        props.mark.bookmarkId && props.removeById(props.mark.bookmarkId)
+        console.log(props.mark.bookmarkId);
+        
     }
     return (
         <>
@@ -23,17 +34,17 @@ export default function MarkElement(props: MarkElementProps) {
                     <p >{props.mark.time} {props.mark.endTime}</p>
                 </div>
                 <div className='col-2 py-0 px-0' >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="90%" height="100%" fill="currentColor" className="bi bi-pencil border border-dark border-2 rounded p-2" viewBox="0 0 16 16">
+                    <svg onClick={() => setIsEditActive(true)} xmlns="http://www.w3.org/2000/svg" width="90%" height="100%" fill="currentColor" className="bi bi-pencil border border-dark border-2 rounded p-2" viewBox="0 0 16 16">
                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                     </svg>
                 </div>
-                <div className='col-2 py-0 px-1'>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" className="bi bi-trash3 border border-dark border-2 rounded p-2" viewBox="0 0 16 16">
+                <div className='col-2 py-0 px-1' >
+                    <svg onClick={() => handleDeleteMark()} xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" className="bi bi-trash3 border border-dark border-2 rounded p-2" viewBox="0 0 16 16" >
                         <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
-                        {/* onClick={() => props.removeById(props.video.videoId)} */}
                     </svg>
                 </div>
             </div>
+            <EditMark isActive={isEditActive} exsistingMark={props.mark} setIsActive={setIsEditActive} editMark={props.editMark}/>
         </>
     )
 }
