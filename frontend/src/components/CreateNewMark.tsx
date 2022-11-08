@@ -38,6 +38,7 @@ export default function CreateNewMark(props: CreateNewMarkProps) {
   function handleSetCurrentTime(name: string) {
     if(props.player) {
       let elapsedTime: number = props.player.getCurrentTime()
+      elapsedTime = Math.round(elapsedTime)
       setFormValues((old) => ({ ...old, [name]: elapsedTime }))
     }
   }
@@ -70,7 +71,7 @@ export default function CreateNewMark(props: CreateNewMarkProps) {
               <input
                 className={"form-control my-2 w-100"}
                 id='idInsert'
-                type={"number"}
+                type={"text"}
                 placeholder="Start-Time"
                 value={formValues.time}
                 name="time"

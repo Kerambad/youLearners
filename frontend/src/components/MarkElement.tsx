@@ -3,6 +3,7 @@ import { Mark } from '../models/Mark'
 import { LoadVideo } from '../models/LoadVideo'
 import EditMark from './EditMark'
 import { CurrentVideoStats } from '../models/CurrentVideoStats'
+import { convertTimeToMinutes } from '../functions/time'
 
 type MarkElementProps = {
     mark: Mark
@@ -37,12 +38,24 @@ export default function MarkElement(props: MarkElementProps) {
         props.mark.bookmarkId && props.removeById(props.mark.bookmarkId)
 
     }
+
+    function displayTime() {
+        const styling:string = "m-0"
+        if (!props.mark.endTime) {
+            return (
+                <p className={styling}>{convertTimeToMinutes(props.mark.time)}</p>
+            )
+        }
+            return (
+                <p className={styling}>{convertTimeToMinutes(props.mark.time)} - {convertTimeToMinutes(props.mark.endTime)}</p>
+            )
+    }
     return (
         <>
             <div className='row m-1 px-0 py-1 border border-dark'>
                 <div className='col-8 overflow-scroll p-1' style={{ height: '3em' }} onClick={() => handleLoadMark()}>
-                    <p >{props.mark.name}</p>
-                    <p >{props.mark.time} {props.mark.endTime}</p>
+                    <p className='m-0'>{props.mark.name}</p>
+                    {displayTime()}
                 </div>
                 <div className='col-2 py-0 px-0' >
                     <svg onClick={() => setIsEditActive(true)} xmlns="http://www.w3.org/2000/svg" width="90%" height="100%" fill="currentColor" className="bi bi-pencil border border-dark border-2 rounded p-2" viewBox="0 0 16 16">
