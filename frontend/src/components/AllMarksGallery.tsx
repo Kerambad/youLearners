@@ -8,7 +8,7 @@ type AllMarksGalleryProps = {
     marks: Mark[]
     activeComponent: number
     loadVideoOptions: (videoOptions: LoadVideo) => void
-    removeMarkById:(videoId: string) => void
+    removeMarkById:(videoId: string, isSection:boolean) => void
     editMark: (markId: string, markToEdit: Mark) => void
     player: any
     currentVideoStats: CurrentVideoStats

@@ -6,6 +6,7 @@ type CreateNewMarkProps = {
   addNewMark: (newMark: Mark) => void
   currentVideoStats: CurrentVideoStats
   player: any
+  setCloseAddComponent: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function CreateNewMark(props: CreateNewMarkProps) {
@@ -33,6 +34,7 @@ export default function CreateNewMark(props: CreateNewMarkProps) {
     }
     props.addNewMark(newMarkToSend)
     setFormValues(emptyFormPlaceholder)
+    props.setCloseAddComponent(false)
   }
 
   function handleSetCurrentTime(name: string) {

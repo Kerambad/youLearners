@@ -10,7 +10,12 @@ type EditMarkProps = {
 
 export default function EditMark(props: EditMarkProps) {
 
-    const [isSection, setIsSection] = useState(false)
+
+    
+    const [isSection, setIsSection] = useState<boolean>(() => {
+        if(props.exsistingMark.sectionId) return true
+        else return false
+    })
 
     const emptyFormPlaceholder: Mark = props.exsistingMark
 
@@ -27,6 +32,7 @@ export default function EditMark(props: EditMarkProps) {
             newMarkToSend.endTime = undefined;
         }
         props.exsistingMark.bookmarkId && props.editMark(props.exsistingMark.bookmarkId, newMarkToSend)
+        props.exsistingMark.sectionId && props.editMark(props.exsistingMark.sectionId, newMarkToSend)
         props.setIsActive(false)
     }
 

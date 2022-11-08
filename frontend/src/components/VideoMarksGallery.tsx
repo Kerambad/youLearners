@@ -11,7 +11,7 @@ type VideoMarksGalleryProps = {
     loadVideoOptions: (videoOptions: LoadVideo) => void
     currentVideoStats: CurrentVideoStats
     addNewMark: (newMark: Mark) => void
-    removeMarkById: (markId: string) => void
+    removeMarkById: (markId: string, isSection:boolean) => void
     editMark: (markId: string, markToEdit: Mark) => void
     player: any
 }
@@ -28,7 +28,7 @@ export default function VideoMarksGallery(props: VideoMarksGalleryProps) {
     }
 
     if (props.activeComponent !== 0) return null;
-    if (renderAddComponent) return <CreateNewMark setRenderAddComponent={setRenderAddComponent} addNewMark={props.addNewMark} currentVideoStats={props.currentVideoStats} player={props.player}/>;
+    if (renderAddComponent) return <CreateNewMark setRenderAddComponent={setRenderAddComponent} addNewMark={props.addNewMark} currentVideoStats={props.currentVideoStats} player={props.player} setCloseAddComponent={setRenderAddComponent}/>;
     return (
         <div>
                 <div className='col-6 form-floating'>
