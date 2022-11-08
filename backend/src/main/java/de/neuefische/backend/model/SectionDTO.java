@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class SectionDTO {
     private String dedicatedVideoId;
     private String name;
-    private String time;
-    private String endTime;
+    private int time;
+    private int endTime;
 }
