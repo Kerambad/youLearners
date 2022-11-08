@@ -13,10 +13,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Section {
 
     @Id
-    private String markId;
+    private String sectionId;
 
     private String dedicatedVideoId;
     private String name;
-    private String time;
-    private String endTime;
+    private int time;
+    private int endTime;
 }
