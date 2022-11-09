@@ -6,13 +6,15 @@ type EditMarkProps = {
     exsistingMark: Mark
     setIsActive: (newState: boolean) => void
     editMark: (markId: string, markToEdit: Mark) => void
+    errorMessages: string[]
+    setErrorMessages: React.Dispatch<React.SetStateAction<string[]>>
+    player: any
 }
 
 export default function EditMark(props: EditMarkProps) {
 
     const [isSection, setIsSection] = useState<boolean>(() => {
-        if (props.exsistingMark.sectionId) return true
-        else return false
+        return !!props.exsistingMark.sectionId;
     })
 
     const emptyFormPlaceholder: Mark = props.exsistingMark
@@ -24,28 +26,76 @@ export default function EditMark(props: EditMarkProps) {
     }
 
     function handleFormSubmit(action: React.FormEvent<HTMLFormElement>) {
+        let nameisPresent = false
+        if (formValues.name.length) nameisPresent = true
+        props.setErrorMessages([])
         action.preventDefault()
-        let newMarkToSend = formValues;
-        if (newMarkToSend.endTime === 0) {
-            newMarkToSend.endTime = undefined;
+        prepareValuesForSubmit()
+        if (!props.errorMessages.length && nameisPresent) {
+            console.log(formValues.name.length);
+            props.exsistingMark.bookmarkId && props.editMark(props.exsistingMark.bookmarkId, formValues)
+            props.exsistingMark.sectionId && props.editMark(props.exsistingMark.sectionId, formValues)
+
+            if (!props.errorMessages.length && nameisPresent) {
+                setFormValues(emptyFormPlaceholder)
+                props.setIsActive(false)
+            }
         }
-        if (newMarkToSend.endTime && (newMarkToSend.endTime > newMarkToSend.time)) {
-            throw new Error("End time must be lower then Time");
-        }
-        props.exsistingMark.bookmarkId && props.editMark(props.exsistingMark.bookmarkId, newMarkToSend)
-        props.exsistingMark.sectionId && props.editMark(props.exsistingMark.sectionId, newMarkToSend)
-        props.setIsActive(false)
+    }
+    function prepareValuesForSubmit() {
+        if (!isSection) setFormValues((old) => ({ ...old, endTime: undefined }))
+        try {
+            handleFormExceptions(props.player.getDuration())
+          } catch (TypeError) {
+            console.log("If errors occuring load video before editing.");
+            
+          }
     }
 
+    function handleFormExceptions(videoEndTime: number) {
+        if (videoEndTime < formValues.time) {
+            props.setErrorMessages((old) => old.concat(["Start-time must be in Video-length"]))
+            console.log("time to long");
+
+        }
+        if (!formValues.name.length) {
+            props.setErrorMessages((old) => old.concat(["Name can't be empty"]))
+            console.log("name");
+        }
+        if (formValues.time < 0) {
+            props.setErrorMessages((old) => old.concat(["Time can't be lower then 0"]))
+        }
+        if (formValues.endTime) {
+            if ((videoEndTime < formValues.endTime)) {
+                props.setErrorMessages((old) => old.concat(["End time must be in Video-length"]))
+            }
+            if ((formValues.time > formValues.endTime)) {
+                props.setErrorMessages((old) => old.concat(["Time must be lower then Endtime"]))
+            }
+        }
+    }
+    function displayErrors() {
+        if (!props.errorMessages.length) return null
+        return (
+            <div className="alert alert-danger" role="alert">
+                {props.errorMessages.map((errorMessage, key) => <p key={key}>{errorMessage}</p>)}
+            </div>
+
+        )
+    }
+function closeComponent() {
+    props.setIsActive(false)
+    props.setErrorMessages([])
+  }
     if (!props.isActive) return null
     return (
         <div>
             <form onSubmit={(action) => handleFormSubmit(action)}>
-                <input type="radio" className="btn-check" name="options" id="option1" autoComplete='off' checked={!isSection} onClick={() => setIsSection(false)} readOnly />
-                <label className="btn btn-light w-50" htmlFor="option1" >Bookmark</label>
+                <input type="radio" className="btn-check" name="bookmark" id="bookmark" autoComplete='off' checked={!isSection} onClick={() => setIsSection(false)} readOnly />
+                <label className="btn btn-light w-50" htmlFor="bookmark" >Bookmark</label>
 
-                <input type="radio" className="btn-check" name="options" id="option2" autoComplete='off' checked={isSection} onClick={() => setIsSection(true)} readOnly />
-                <label className="btn btn-light w-50" htmlFor="option2" >Section</label>
+                <input type="radio" className="btn-check" name="section" id="section" autoComplete='off' checked={isSection} onClick={() => setIsSection(true)} readOnly />
+                <label className="btn btn-light w-50" htmlFor="section" >Section</label>
                 <div className='form-floating my-1' >
                     <input
                         className={"form-control my-2 w-100"}
@@ -85,8 +135,9 @@ export default function EditMark(props: EditMarkProps) {
                     />
                     <label htmlFor='idInsert'>End-Time</label>
                 </div>
+                {displayErrors()}
                 <button className='btn btn-danger w-50' type='submit'>Edit Mark</button>
-                <button className='btn btn-light w-50' onClick={() => props.setIsActive(false)}>Back</button>
+                <button className='btn btn-light w-50' onClick={() => closeComponent()}>Back</button>
             </form>
         </div>
     )

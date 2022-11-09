@@ -13,7 +13,7 @@ import { useState } from 'react';
 function App() {
 
   const {addNewVideo, videos, removeVideoById, updateVideo} = useManageVideos();
-  const {marks, addNewMark, removeMarkById, updateMark} = useManageMarks();
+  const {marks, addNewMark, removeMarkById, updateMark, errorMessages, setErrorMessages} = useManageMarks();
   const {setRenderedComponent, activeComponent} = useActiveComponent();
   const {videoPlayOptions, setVideoPlayOptions, curentVideoStats, setCurentVideoStats} = useLoadVideo();
 
@@ -22,10 +22,10 @@ function App() {
   return (
     <div className="vh-100">
       <VideoPlayer videoPlayOptions={videoPlayOptions} setCurentVideoStats={setCurentVideoStats} player={player} setPlayer={setPlayer}/>
-      <VideoMarksGallery player={player} marks={marks} activeComponent={activeComponent} loadVideoOptions={setVideoPlayOptions} currentVideoStats={curentVideoStats} addNewMark={addNewMark} removeMarkById={removeMarkById} editMark={updateMark} />
+      <VideoMarksGallery errorMessages={errorMessages} setErrorMessages={setErrorMessages} player={player} marks={marks} activeComponent={activeComponent} loadVideoOptions={setVideoPlayOptions} currentVideoStats={curentVideoStats} addNewMark={addNewMark} removeMarkById={removeMarkById} editMark={updateMark} />
       <VideoInsert setVideoIdFunction={addNewVideo} isActive={activeComponent} loadVideoOptions={setVideoPlayOptions} />
       <History isActive={activeComponent} allVideos={videos} removeById={removeVideoById} updateVideo={updateVideo} loadVideoOptions={setVideoPlayOptions} />
-      <AllMarksGallery marks={marks} activeComponent={activeComponent} loadVideoOptions={setVideoPlayOptions} removeMarkById={removeMarkById} editMark={updateMark} currentVideoStats={curentVideoStats} player={player}/>
+      <AllMarksGallery errorMessages={errorMessages} setErrorMessages={setErrorMessages} marks={marks} activeComponent={activeComponent} loadVideoOptions={setVideoPlayOptions} removeMarkById={removeMarkById} editMark={updateMark} currentVideoStats={curentVideoStats} player={player}/>
       <Navbar setRenderComponentFunction={setRenderedComponent} />
     </div>
   );

@@ -12,6 +12,9 @@ type MarkElementProps = {
     editMark: (markId: string, markToEdit: Mark) => void
     player: any
     currentVideoStats: CurrentVideoStats
+    errorMessages: string[]
+    setErrorMessages: React.Dispatch<React.SetStateAction<string[]>>
+
 }
 
 export default function MarkElement(props: MarkElementProps) {
@@ -69,7 +72,7 @@ export default function MarkElement(props: MarkElementProps) {
                     </svg>
                 </div>
             </div>
-            <EditMark isActive={isEditActive} exsistingMark={props.mark} setIsActive={setIsEditActive} editMark={props.editMark} />
+            <EditMark errorMessages={props.errorMessages} player={props.player} setErrorMessages={props.setErrorMessages} isActive={isEditActive} exsistingMark={props.mark} setIsActive={setIsEditActive} editMark={props.editMark} />
         </>
     )
 }

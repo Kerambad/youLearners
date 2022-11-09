@@ -6,6 +6,5 @@ export default function useActiveComponent() {
     const setRenderedComponent = (status: number) => {
         setActiveComponent(status)
     }
-console.log(activeComponent)
     return { setRenderedComponent, activeComponent }
 }

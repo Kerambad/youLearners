@@ -14,6 +14,8 @@ type VideoMarksGalleryProps = {
     removeMarkById: (markId: string, isSection:boolean) => void
     editMark: (markId: string, markToEdit: Mark) => void
     player: any
+    errorMessages: string[]
+    setErrorMessages: React.Dispatch<React.SetStateAction<string[]>>
 }
 
 export default function VideoMarksGallery(props: VideoMarksGalleryProps) {
@@ -30,7 +32,7 @@ export default function VideoMarksGallery(props: VideoMarksGalleryProps) {
     }
 
     if (props.activeComponent !== 0) return null;
-    if (renderAddComponent) return <CreateNewMark setRenderAddComponent={setRenderAddComponent} addNewMark={props.addNewMark} currentVideoStats={props.currentVideoStats} player={props.player} setCloseAddComponent={setRenderAddComponent}/>;
+    if (renderAddComponent) return <CreateNewMark errorMessages={props.errorMessages} setErrorMessages={props.setErrorMessages} setRenderAddComponent={setRenderAddComponent} addNewMark={props.addNewMark} currentVideoStats={props.currentVideoStats} player={props.player} setCloseAddComponent={setRenderAddComponent}/>;
     return (
         <div>
                 <div className='col-6 form-floating'>
@@ -45,7 +47,7 @@ export default function VideoMarksGallery(props: VideoMarksGalleryProps) {
                     <label htmlFor='filterTextInsert'>Filter</label>
                 </div>
                     <button className='col-6 btn btn-danger' onClick={() => setRenderAddComponent(true)}>Add Mark</button>
-            {filterMarks().map((mark, key) => <MarkElement mark={mark} key={key} loadVideoOptions={props.loadVideoOptions} removeById={props.removeMarkById} editMark={props.editMark} player={props.player} currentVideoStats={props.currentVideoStats}/>)}
+            {filterMarks().map((mark, key) => <MarkElement errorMessages={props.errorMessages} setErrorMessages={props.setErrorMessages} mark={mark} key={key} loadVideoOptions={props.loadVideoOptions} removeById={props.removeMarkById} editMark={props.editMark} player={props.player} currentVideoStats={props.currentVideoStats}/>)}
         </div>
     )
 }
