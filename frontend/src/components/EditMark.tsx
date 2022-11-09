@@ -10,10 +10,8 @@ type EditMarkProps = {
 
 export default function EditMark(props: EditMarkProps) {
 
-
-    
     const [isSection, setIsSection] = useState<boolean>(() => {
-        if(props.exsistingMark.sectionId) return true
+        if (props.exsistingMark.sectionId) return true
         else return false
     })
 
@@ -31,11 +29,13 @@ export default function EditMark(props: EditMarkProps) {
         if (newMarkToSend.endTime === 0) {
             newMarkToSend.endTime = undefined;
         }
+        if (newMarkToSend.endTime && (newMarkToSend.endTime > newMarkToSend.time)) {
+            throw new Error("End time must be lower then Time");
+        }
         props.exsistingMark.bookmarkId && props.editMark(props.exsistingMark.bookmarkId, newMarkToSend)
         props.exsistingMark.sectionId && props.editMark(props.exsistingMark.sectionId, newMarkToSend)
         props.setIsActive(false)
     }
-
 
     if (!props.isActive) return null
     return (

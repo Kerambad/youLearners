@@ -22,9 +22,11 @@ export default function VideoMarksGallery(props: VideoMarksGalleryProps) {
     const [renderAddComponent, setRenderAddComponent] = useState(false)
 
     function filterMarks() {
-        return (
-            props.marks.filter((mark) => mark.dedicatedVideoId === props.currentVideoStats.videoId).filter((mark) => mark.name.toLowerCase()
-                .includes(filterText.toLowerCase())))
+        let tempList = 
+        props.marks.filter((mark) => mark.dedicatedVideoId === props.currentVideoStats.videoId).filter((mark) => mark.name.toLowerCase()
+        .includes(filterText.toLowerCase()))
+        tempList = tempList.sort((a,b) => a.time - b.time)
+        return (tempList)
     }
 
     if (props.activeComponent !== 0) return null;

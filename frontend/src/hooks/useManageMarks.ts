@@ -5,6 +5,7 @@ import { Mark } from '../models/Mark';
 export default function useManageMarks() {
 
   const [marks, setMarks] = useState([])
+  const [sections, setSections] = useState([])
 
   useEffect(() => {
     fetchAllMarks();
@@ -15,15 +16,14 @@ export default function useManageMarks() {
     axios.get("/api/bookmarks")
       .then((response) => response.data)
       .then((data) => setMarks(data))
-      .then(
-        () => {
-          axios.get("/api/sections")
-            .then((response) => response.data)
-            .then((data) => setMarks((old) => old.concat(data)))
-            .catch((error) => console.log(error))
-        })
+      .catch((error) => console.log(error))
+
+    axios.get("/api/sections")
+      .then((response) => response.data)
+      .then((data) => setSections(data))
       .catch((error) => console.log(error))
   }
+
 
   const addNewMark = (newMark: Mark) => {
     if (!newMark.endTime) {
@@ -69,5 +69,5 @@ export default function useManageMarks() {
 
   }
 
-  return { marks, addNewMark, removeMarkById, updateMark }
+  return { marks: marks.concat(sections), addNewMark, removeMarkById, updateMark }
 }

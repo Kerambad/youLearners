@@ -1,6 +1,6 @@
 export type Mark = {
     bookmarkId?: string,
-    sectionId?:string,
+    sectionId?:string
     dedicatedVideoId:string,
     name: string,
     time: number,
