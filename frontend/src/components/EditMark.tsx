@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Mark } from '../models/Mark'
 
+
 type EditMarkProps = {
     isActive: boolean
     exsistingMark: Mark
@@ -122,6 +123,7 @@ function closeComponent() {
                     />
                     <label htmlFor='idInsert'>Start-Time</label>
                 </div>
+
                 <div className='form-floating my-1' >
                     <input
                         className={"form-control my-2 w-100"}

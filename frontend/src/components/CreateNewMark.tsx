@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { CurrentVideoStats } from '../models/CurrentVideoStats'
 import { Mark } from '../models/Mark'
+import InputTime from './InputTime'
 type CreateNewMarkProps = {
   setRenderAddComponent: (state: boolean) => void
   addNewMark: (newMark: Mark) => void
@@ -29,13 +30,14 @@ export default function CreateNewMark(props: CreateNewMarkProps) {
 
   function handleFormSubmit(action: React.FormEvent<HTMLFormElement>) {
     let nameisPresent = false
-    if(formValues.name.length) nameisPresent = true 
+    if (formValues.name.length) nameisPresent = true
     props.setErrorMessages([])
     action.preventDefault()
     prepareValuesForSubmit()
     if (!props.errorMessages.length && nameisPresent) {
       console.log(formValues.name.length);
-      props.addNewMark(formValues)}
+      props.addNewMark(formValues)
+    }
     if (!props.errorMessages.length && nameisPresent) {
       setFormValues(emptyFormPlaceholder)
       props.setCloseAddComponent(false)
@@ -75,7 +77,7 @@ export default function CreateNewMark(props: CreateNewMarkProps) {
     if (!props.errorMessages.length) return null
     return (
       <div className="alert alert-danger" role="alert">
-          {props.errorMessages.map((errorMessage, key) => <li className='m-0' key={key}>{errorMessage}</li>)}
+        {props.errorMessages.map((errorMessage, key) => <li className='m-0' key={key}>{errorMessage}</li>)}
       </div>
 
     )
@@ -91,6 +93,8 @@ export default function CreateNewMark(props: CreateNewMarkProps) {
     props.setRenderAddComponent(false)
     props.setErrorMessages([])
   }
+  console.log(formValues.time);
+  
 
   return (
     <div>
@@ -116,25 +120,14 @@ export default function CreateNewMark(props: CreateNewMarkProps) {
         </div>
         <div className='row'>
           <div className='col-9'>
-            <div className='form-floating my-1' >
-              <input
-                className={"form-control my-2 w-100"}
-                id='timeInsert'
-                type={"text"}
-                placeholder="Start-Time"
-                value={formValues.time}
-                name="time"
-                onChange={(action) => handleFormInput(action)}
-                required={true}
-              />
-              <label htmlFor='timeInsert'>Start-Time</label>
-            </div>
+            <InputTime timeInSeconds={formValues.time} setTimeInSeconds={setFormValues} />
           </div>
           <div className="col-auto">
             <input type="checkbox" className="btn-check" id="time" autoComplete="off" checked={false} onClick={() => handleSetCurrentTime("time")} readOnly />
             <label className="btn btn-primary w-100" htmlFor="time" >Time</label>
           </div>
         </div>
+
         <div className='row'>
           <div className='col-9'>
             <div className='form-floating my-1' >
