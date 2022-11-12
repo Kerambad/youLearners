@@ -12,7 +12,7 @@ type EditMarkProps = {
     setErrorMessages: React.Dispatch<React.SetStateAction<string[]>>
     player: any
 }
-
+//1
 export default function EditMark(props: EditMarkProps) {
 
     const [isSection, setIsSection] = useState<boolean>(() => {
