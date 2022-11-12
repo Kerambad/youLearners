@@ -120,7 +120,7 @@ export default function CreateNewMark(props: CreateNewMarkProps) {
         </div>
         <div className='row'>
           <div className='col-9'>
-            <InputTime timeInSeconds={formValues.time} setTimeInSeconds={setFormValues} />
+            <InputTime key={1} timeInSeconds={formValues.time} setTimeInSeconds={setFormValues} isNotActive={false} attribute={"time"}/>
           </div>
           <div className="col-auto">
             <input type="checkbox" className="btn-check" id="time" autoComplete="off" checked={false} onClick={() => handleSetCurrentTime("time")} readOnly />
@@ -130,19 +130,7 @@ export default function CreateNewMark(props: CreateNewMarkProps) {
 
         <div className='row'>
           <div className='col-9'>
-            <div className='form-floating my-1' >
-              <input
-                className={"form-control my-2 w-100"}
-                id='endTimeInsert'
-                type={"text"}
-                placeholder="End-Time"
-                value={formValues.endTime}
-                name="endTime"
-                onChange={(action) => handleFormInput(action)}
-                disabled={!isSection}
-              />
-              <label htmlFor='endTimeInsert'>End-Time</label>
-            </div>
+          <InputTime timeInSeconds={formValues.endTime || 0} setTimeInSeconds={setFormValues} isNotActive={!isSection} attribute={"endTime"}/>
           </div>
           <div className="col-auto">
             <input type="checkbox" className="btn-check" id="endTime" autoComplete="off" checked={false} onClick={() => handleSetCurrentTime("endTime")} readOnly />
