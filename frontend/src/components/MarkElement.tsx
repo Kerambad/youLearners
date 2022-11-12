@@ -8,10 +8,13 @@ import { convertTimeToMinutes } from '../functions/time'
 type MarkElementProps = {
     mark: Mark
     loadVideoOptions: (videoOptions: LoadVideo) => void
-    removeById: (bookmarkId: string) => void
+    removeById: (bookmarkId: string, isSection: boolean) => void
     editMark: (markId: string, markToEdit: Mark) => void
     player: any
     currentVideoStats: CurrentVideoStats
+    errorMessages: string[]
+    setErrorMessages: React.Dispatch<React.SetStateAction<string[]>>
+
 }
 
 export default function MarkElement(props: MarkElementProps) {
@@ -31,24 +34,25 @@ export default function MarkElement(props: MarkElementProps) {
             props.player.playVideo();
             console.log("direkt");
         }
-
     }
-
     function handleDeleteMark() {
-        props.mark.bookmarkId && props.removeById(props.mark.bookmarkId)
-
+        if (props.mark.bookmarkId) {
+            props.removeById(props.mark.bookmarkId, false)
+        }
+        if (props.mark.sectionId) {
+            props.removeById(props.mark.sectionId, true)
+        }
     }
-
     function displayTime() {
-        const styling:string = "m-0"
+        const styling: string = "m-0"
         if (!props.mark.endTime) {
             return (
                 <p className={styling}>{convertTimeToMinutes(props.mark.time)}</p>
             )
         }
-            return (
-                <p className={styling}>{convertTimeToMinutes(props.mark.time)} - {convertTimeToMinutes(props.mark.endTime)}</p>
-            )
+        return (
+            <p className={styling}>{convertTimeToMinutes(props.mark.time)} - {convertTimeToMinutes(props.mark.endTime)}</p>
+        )
     }
     return (
         <>
@@ -68,7 +72,7 @@ export default function MarkElement(props: MarkElementProps) {
                     </svg>
                 </div>
             </div>
-            <EditMark isActive={isEditActive} exsistingMark={props.mark} setIsActive={setIsEditActive} editMark={props.editMark} />
+            <EditMark errorMessages={props.errorMessages} player={props.player} setErrorMessages={props.setErrorMessages} isActive={isEditActive} exsistingMark={props.mark} setIsActive={setIsEditActive} editMark={props.editMark} />
         </>
     )
 }

@@ -5,7 +5,7 @@ type NavbarProps = {
 export default function Navbar(props: NavbarProps) {
     
     return (
-        <div className='container text-center'>
+
             <nav className="navbar fixed-bottom bg-dark">
                 <div className="container-fluid">
                     <button className="btn btn-outline-light" type="button" onClick={() => props.setRenderComponentFunction(0)}>VideoMarks</button>
@@ -14,6 +14,6 @@ export default function Navbar(props: NavbarProps) {
                     <button className="btn btn-outline-light" type="button" onClick={() => props.setRenderComponentFunction(2)}>History</button>
                 </div>
             </nav>
-        </div>
+
     )
 }

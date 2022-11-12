@@ -11,9 +11,11 @@ type VideoMarksGalleryProps = {
     loadVideoOptions: (videoOptions: LoadVideo) => void
     currentVideoStats: CurrentVideoStats
     addNewMark: (newMark: Mark) => void
-    removeMarkById: (markId: string) => void
+    removeMarkById: (markId: string, isSection: boolean) => void
     editMark: (markId: string, markToEdit: Mark) => void
     player: any
+    errorMessages: string[]
+    setErrorMessages: React.Dispatch<React.SetStateAction<string[]>>
 }
 
 export default function VideoMarksGallery(props: VideoMarksGalleryProps) {
@@ -22,18 +24,21 @@ export default function VideoMarksGallery(props: VideoMarksGalleryProps) {
     const [renderAddComponent, setRenderAddComponent] = useState(false)
 
     function filterMarks() {
-        return (
+        let tempList =
             props.marks.filter((mark) => mark.dedicatedVideoId === props.currentVideoStats.videoId).filter((mark) => mark.name.toLowerCase()
-                .includes(filterText.toLowerCase())))
+                .includes(filterText.toLowerCase()))
+        tempList = tempList.sort((a, b) => a.time - b.time)
+        return (tempList)
     }
 
     if (props.activeComponent !== 0) return null;
-    if (renderAddComponent) return <CreateNewMark setRenderAddComponent={setRenderAddComponent} addNewMark={props.addNewMark} currentVideoStats={props.currentVideoStats} player={props.player}/>;
+    if (renderAddComponent) return <CreateNewMark errorMessages={props.errorMessages} setErrorMessages={props.setErrorMessages} setRenderAddComponent={setRenderAddComponent} addNewMark={props.addNewMark} currentVideoStats={props.currentVideoStats} player={props.player} setCloseAddComponent={setRenderAddComponent} />;
     return (
-        <div>
-                <div className='col-6 form-floating'>
+        <>
+            <div style={{ display: "flex" }}>
+                <div className='col-8 form-floating'>
                     <input
-                        className={"form-control my-2 w-100"}
+                        className={"form-control my-2"}
                         id='filterTextInsert'
                         type={"text"}
                         placeholder="Filter"
@@ -42,8 +47,9 @@ export default function VideoMarksGallery(props: VideoMarksGalleryProps) {
                     />
                     <label htmlFor='filterTextInsert'>Filter</label>
                 </div>
-                    <button className='col-6 btn btn-danger' onClick={() => setRenderAddComponent(true)}>Add Mark</button>
-            {filterMarks().map((mark, key) => <MarkElement mark={mark} key={key} loadVideoOptions={props.loadVideoOptions} removeById={props.removeMarkById} editMark={props.editMark} player={props.player} currentVideoStats={props.currentVideoStats}/>)}
-        </div>
+                <button className='col-4 btn btn-danger p-0 my-2' onClick={() => setRenderAddComponent(true)}>Add Mark</button>
+            </div>
+            {filterMarks().map((mark, key) => <MarkElement errorMessages={props.errorMessages} setErrorMessages={props.setErrorMessages} mark={mark} key={key} loadVideoOptions={props.loadVideoOptions} removeById={props.removeMarkById} editMark={props.editMark} player={props.player} currentVideoStats={props.currentVideoStats} />)}
+        </>
     )
 }

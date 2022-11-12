@@ -8,10 +8,13 @@ type AllMarksGalleryProps = {
     marks: Mark[]
     activeComponent: number
     loadVideoOptions: (videoOptions: LoadVideo) => void
-    removeMarkById:(videoId: string) => void
+    removeMarkById: (videoId: string, isSection: boolean) => void
     editMark: (markId: string, markToEdit: Mark) => void
     player: any
     currentVideoStats: CurrentVideoStats
+    errorMessages: string[]
+    setErrorMessages: React.Dispatch<React.SetStateAction<string[]>>
+
 }
 
 export default function AllMarksGallery(props: AllMarksGalleryProps) {
@@ -38,7 +41,7 @@ export default function AllMarksGallery(props: AllMarksGalleryProps) {
                 />
                 <label htmlFor='filterTextInsert'>Filter</label>
             </div>
-            {filterMarks().map((mark, key) => <MarkElement mark={mark} key={key} loadVideoOptions={props.loadVideoOptions} removeById={props.removeMarkById} editMark={props.editMark} player={props.player} currentVideoStats={props.currentVideoStats}/>)}
+            {filterMarks().map((mark, key) => <MarkElement errorMessages={props.errorMessages} setErrorMessages={props.setErrorMessages} mark={mark} key={key} loadVideoOptions={props.loadVideoOptions} removeById={props.removeMarkById} editMark={props.editMark} player={props.player} currentVideoStats={props.currentVideoStats} />)}
         </div>
     )
 }
