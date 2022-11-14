@@ -1,0 +1,29 @@
+.time-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    margin: 0;
+    padding: 0 auto;
+}
+
+.time-button {
+    flex-basis: 25%;
+    align-self: center;
+    margin: 0;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5em;
+}
+
+.form-input {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1em;
+    margin: 1em;
+}

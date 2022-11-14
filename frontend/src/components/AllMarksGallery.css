@@ -1,0 +1,7 @@
+.marks-gallery {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    justify-content: space-between;
+    gap: 0.5rem;
+}

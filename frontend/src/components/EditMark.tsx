@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Mark } from '../models/Mark'
 import InputTime from './InputTime'
+import "./EditMark.css"
 
 
 type EditMarkProps = {
@@ -89,32 +90,43 @@ export default function EditMark(props: EditMarkProps) {
     }
     if (!props.isActive) return null
     return (
-        <div>
-            <form onSubmit={(action) => handleFormSubmit(action)}>
+        <form onSubmit={(action) => handleFormSubmit(action)} className="form-input">
+            <span className='buttons'>
+
                 <input type="radio" className="btn-check" name="bookmark" id="bookmark" autoComplete='off' checked={!isSection} onClick={() => setIsSection(false)} readOnly />
                 <label className="btn btn-light w-50" htmlFor="bookmark" >Bookmark</label>
 
                 <input type="radio" className="btn-check" name="section" id="section" autoComplete='off' checked={isSection} onClick={() => setIsSection(true)} readOnly />
                 <label className="btn btn-light w-50" htmlFor="section" >Section</label>
-                <div className='form-floating my-1' >
-                    <input
-                        className={"form-control my-2 w-100"}
-                        id='idInsert'
-                        type={"text"}
-                        placeholder="Name"
-                        name='name'
-                        value={formValues.name}
-                        onChange={(action) => handleFormInput(action)}
-                        required={true}
-                    />
-                    <label htmlFor='idInsert'>Name</label>
-                </div>
-                    <InputTime timeInSeconds={props.exsistingMark.time} setTimeInSeconds={setFormValues} isNotActive={false} attribute={"time"}/>
-                    <InputTime timeInSeconds={formValues.endTime || 0} setTimeInSeconds={setFormValues} isNotActive={!isSection} attribute={"endTime"}/>
-                {displayErrors()}
+            </span>
+
+            <div className='form-floating' >
+                <input
+                    className={"form-control w-100"}
+                    id='idInsert'
+                    type={"text"}
+                    placeholder="Name"
+                    name='name'
+                    value={formValues.name}
+                    onChange={(action) => handleFormInput(action)}
+                    required={true}
+                />
+                <label htmlFor='idInsert'>Name</label>
+            </div>
+
+            <span className='time-input'>
+                Start-Time: <InputTime timeInSeconds={props.exsistingMark.time} setTimeInSeconds={setFormValues} isNotActive={false} attribute={"time"} />
+            </span>
+            <span className='time-input'>
+                End - Time: <InputTime timeInSeconds={formValues.endTime || 0} setTimeInSeconds={setFormValues} isNotActive={!isSection} attribute={"endTime"} />
+            </span>
+            {displayErrors()}
+
+            <span className='buttons'>
                 <button className='btn btn-danger w-50' type='submit'>Edit Mark</button>
                 <button className='btn btn-light w-50' onClick={() => closeComponent()}>Back</button>
-            </form>
-        </div>
+            </span>
+
+        </form>
     )
 }

@@ -1,0 +1,15 @@
+.filter-add {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 0.25rem;
+}
+
+.input-field {
+    flex-basis: 70%;
+}
+
+.add-button {
+    flex-basis: 30%;
+}
+
