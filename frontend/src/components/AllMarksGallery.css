@@ -3,5 +3,7 @@
     flex-direction: column;
     padding: 0.5rem;
     justify-content: space-between;
-    gap: 0.5rem;
+    gap: 5px;
+    max-width: 500px;
+    margin: 0 auto;
 }
