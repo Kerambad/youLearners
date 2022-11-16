@@ -9,6 +9,7 @@ import useManageMarks from './hooks/useManageMarks';
 import useLoadVideo from './hooks/useLoadVideo';
 import VideoMarksGallery from './components/VideoMarksGallery';
 import { useState } from 'react';
+import "./App.css"
 
 function App() {
 
@@ -20,18 +21,18 @@ function App() {
   const [player, setPlayer] = useState<any>();
 
   return (
-    <div className="vh-100">
-      <div className='fixed-top'>
+    <span className="app-style ">
+      <div className='fixed-top video-player'>
         <VideoPlayer videoPlayOptions={videoPlayOptions} setCurentVideoStats={setCurentVideoStats} player={player} setPlayer={setPlayer} />
       </div>
-      <div className='overflow-scroll' style={{paddingBottom: "60px", paddingTop:"220px"}}>
+      <div className='overflow-scroll option-section'>
         <VideoMarksGallery errorMessages={errorMessages} setErrorMessages={setErrorMessages} player={player} marks={marks} activeComponent={activeComponent} loadVideoOptions={setVideoPlayOptions} currentVideoStats={curentVideoStats} addNewMark={addNewMark} removeMarkById={removeMarkById} editMark={updateMark} />
         <VideoInsert setVideoIdFunction={addNewVideo} isActive={activeComponent} loadVideoOptions={setVideoPlayOptions} />
         <History isActive={activeComponent} allVideos={videos} removeById={removeVideoById} updateVideo={updateVideo} loadVideoOptions={setVideoPlayOptions} />
         <AllMarksGallery errorMessages={errorMessages} setErrorMessages={setErrorMessages} marks={marks} activeComponent={activeComponent} loadVideoOptions={setVideoPlayOptions} removeMarkById={removeMarkById} editMark={updateMark} currentVideoStats={curentVideoStats} player={player} />
       </div>
       <Navbar setRenderComponentFunction={setRenderedComponent} />
-    </div>
+    </span>
   );
 }
 

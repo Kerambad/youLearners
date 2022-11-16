@@ -1,6 +1,7 @@
 import { Video } from '../models/Video'
 import { LoadVideo } from '../models/LoadVideo'
 import HistoryElement from './HistoryElement'
+import "./History.css"
 
 type HistoryProps = {
     isActive: number
@@ -19,8 +20,8 @@ export default function History(props: HistoryProps) {
 
     if (props.isActive !== 2) return null;
     return (
-            <div className='container p-0 m-0' >
+            <span className='history-gallery' >
                 {props.allVideos.map((singleVideo: Video) => { return createHistoryElement(singleVideo) })}
-            </div>
+            </span>
     )
 }

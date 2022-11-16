@@ -1,0 +1,10 @@
+.option-section {
+    padding-bottom: 60px;
+    padding-top: calc(0.56*100vw);
+}
+.app-style {
+    height: 100vh;
+}
+.video-player {
+    position: fixed;
+}

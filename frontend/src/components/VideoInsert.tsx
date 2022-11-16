@@ -34,8 +34,22 @@ export default function VideoInsert(props: VideoInsertProps) {
     function handleFormSubmit(action: React.FormEvent<HTMLFormElement>) {
         action.preventDefault();
         createNewVideo();
-        setVideoId("");
-        setVideoTitle("");
+        setFormDefault()
+    }
+    function handlePlayVideo() {
+        const videoPlay: LoadVideo = {
+            videoId: videoId,
+            startTime: 0,
+            autoplay: true
+        }
+        props.loadVideoOptions(videoPlay)
+        setFormDefault()
+    }
+
+    function setFormDefault() {
+        setVideoLink("")
+        setVideoId("")
+        setVideoTitle("")
     }
 
     if (props.isActive !== 1) return null;
@@ -79,7 +93,10 @@ export default function VideoInsert(props: VideoInsertProps) {
                     />
                     <label htmlFor='title'>Title</label>
                 </div>
-                <button className='btn btn-danger w-50 ' type='submit'>Add Video</button>
+                <span className='buttons'>
+                    <button className='btn btn-danger w-50' name='playVideo' id='play' type='button' onClick={handlePlayVideo}>Play Video</button>
+                    <button className='btn btn-outline-danger w-50' name='submit' id='submit' type='submit'>Add to Favorites</button>
+                </span>
             </form>
         </div>
     )

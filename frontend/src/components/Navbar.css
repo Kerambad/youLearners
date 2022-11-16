@@ -1,0 +1,15 @@
+.buttons-select {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-left: 0;
+    margin-bottom: 0;
+    width: 100%;
+}
+.nav-button {
+ width: 100%;
+}
+
+.nav-element {
+    width: 25%;
+}

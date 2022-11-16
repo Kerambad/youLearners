@@ -4,6 +4,7 @@ import { LoadVideo } from '../models/LoadVideo'
 import CreateNewMark from './CreateNewMark'
 import MarkElement from './MarkElement'
 import { CurrentVideoStats } from '../models/CurrentVideoStats'
+import "./VideoMarkGallery.css"
 
 type VideoMarksGalleryProps = {
     marks: Mark[]
@@ -34,22 +35,22 @@ export default function VideoMarksGallery(props: VideoMarksGalleryProps) {
     if (props.activeComponent !== 0) return null;
     if (renderAddComponent) return <CreateNewMark errorMessages={props.errorMessages} setErrorMessages={props.setErrorMessages} setRenderAddComponent={setRenderAddComponent} addNewMark={props.addNewMark} currentVideoStats={props.currentVideoStats} player={props.player} setCloseAddComponent={setRenderAddComponent} />;
     return (
-        <>
-            <div style={{ display: "flex" }}>
-                <div className='col-8 form-floating'>
+        <span className='marks-gallery'>
+            <span className='filter-add'>
+                <div className='form-floating input-field'>
                     <input
-                        className={"form-control my-2"}
+                        className={"form-control"}
                         id='filterTextInsert'
                         type={"text"}
                         placeholder="Filter"
                         value={filterText}
                         onChange={(action) => setFilterText(action.target.value)}
                     />
-                    <label htmlFor='filterTextInsert'>Filter</label>
+                    <label htmlFor='filterTextInsert' className='input-field'>Filter</label>
                 </div>
-                <button className='col-4 btn btn-danger p-0 my-2' onClick={() => setRenderAddComponent(true)}>Add Mark</button>
-            </div>
+                <button className='btn btn-danger add-button' onClick={() => setRenderAddComponent(true)}>Add Mark</button>
+            </span>
             {filterMarks().map((mark, key) => <MarkElement errorMessages={props.errorMessages} setErrorMessages={props.setErrorMessages} mark={mark} key={key} loadVideoOptions={props.loadVideoOptions} removeById={props.removeMarkById} editMark={props.editMark} player={props.player} currentVideoStats={props.currentVideoStats} />)}
-        </>
+        </span>
     )
 }

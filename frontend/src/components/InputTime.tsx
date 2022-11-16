@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Mark } from '../models/Mark'
+import "./InputTime.css"
 
 type InputTimeProps = {
     timeInSeconds: number
     setTimeInSeconds: React.Dispatch<React.SetStateAction<Mark>>
-    isNotActive:boolean
+    isNotActive: boolean
     attribute: string
 }
 
@@ -80,11 +81,49 @@ export default function InputTime(props: InputTimeProps) {
     }, [valueDays, valueHours, valueMinutes, valueSeconds, setTimeInAddComponent, attribute])
 
     return (
-        <p className='row mx-2'>
-            <input disabled={props.isNotActive} className='col-2 p-2 border-1' type={"number"} name='days' value={Math.floor(props.timeInSeconds / 86400)} onChange={(action) => onDaysChange(action)}></input>
-            <input disabled={props.isNotActive} className='col-2' name='hours' type={"number"} value={Math.floor((props.timeInSeconds % 86400) / 3600)} onChange={(action) => onHourChange(action)}></input>
-            <input disabled={props.isNotActive} className='col-2' name='minutes' type={"number"} value={Math.floor((props.timeInSeconds % 3600) / 60)} onChange={(action) => onMinuteChange(action)}></input>
-            <input disabled={props.isNotActive} className='col-2' name='seconds' type={"number"} value={props.timeInSeconds % 60} onChange={(action) => onSecondsChange(action)}></input>
+        <p className='input-field'>
+            <input
+                disabled={props.isNotActive}
+                className='col-2 p-2 time-field'
+                type={"number"}
+                name='days'
+                value={Math.floor(props.timeInSeconds / 86400)}
+                onChange={(action) => onDaysChange(action)}
+                style={{
+                    "borderLeft": "0.5px solid",
+                    "borderTopLeftRadius": "0.375rem",
+                    "borderBottomLeftRadius": "0.375rem",
+                }}
+            />
+            <input
+                disabled={props.isNotActive}
+                className='col-2 time-field'
+                name='hours'
+                type={"number"}
+                value={Math.floor((props.timeInSeconds % 86400) / 3600)}
+                onChange={(action) => onHourChange(action)}
+            />
+            <input
+                disabled={props.isNotActive}
+                className='col-2 time-field' 
+                name='minutes'
+                type={"number"}
+                value={Math.floor((props.timeInSeconds % 3600) / 60)}
+                onChange={(action) => onMinuteChange(action)}
+            />
+            <input
+                disabled={props.isNotActive}
+                className='col-2 time-field'
+                name='seconds'
+                type={"number"}
+                value={props.timeInSeconds % 60}
+                onChange={(action) => onSecondsChange(action)}
+                style={{
+                    "borderRight": "0.5px solid",
+                    "borderTopRightRadius": "0.375rem",
+                    "borderBottomRightRadius": "0.375rem",
+                }}
+            />
         </p>
     )
 

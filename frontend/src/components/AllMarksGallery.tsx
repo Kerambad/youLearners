@@ -3,6 +3,7 @@ import { Mark } from '../models/Mark'
 import { LoadVideo } from '../models/LoadVideo'
 import MarkElement from './MarkElement'
 import { CurrentVideoStats } from '../models/CurrentVideoStats'
+import "./AllMarksGallery.css"
 
 type AllMarksGalleryProps = {
     marks: Mark[]
@@ -29,10 +30,10 @@ export default function AllMarksGallery(props: AllMarksGalleryProps) {
 
     if (props.activeComponent !== 3) return null;
     return (
-        <div>
-            <div className='form-floating my-1'>
+        <span className='marks-gallery'>
+            <div className='form-floating'>
                 <input
-                    className={"form-control my-2 w-100"}
+                    className="form-control"
                     id='filterTextInsert'
                     type={"text"}
                     placeholder="Filter"
@@ -42,6 +43,6 @@ export default function AllMarksGallery(props: AllMarksGalleryProps) {
                 <label htmlFor='filterTextInsert'>Filter</label>
             </div>
             {filterMarks().map((mark, key) => <MarkElement errorMessages={props.errorMessages} setErrorMessages={props.setErrorMessages} mark={mark} key={key} loadVideoOptions={props.loadVideoOptions} removeById={props.removeMarkById} editMark={props.editMark} player={props.player} currentVideoStats={props.currentVideoStats} />)}
-        </div>
+        </span>
     )
 }
