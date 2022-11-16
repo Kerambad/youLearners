@@ -28,12 +28,10 @@ export default function MarkElement(props: MarkElementProps) {
                 startTime: props.mark.time,
                 autoplay: true
             })
-            console.log("Umweg");
         }
         else {
             props.player.seekTo(props.mark.time, "seconds");
             props.player.playVideo();
-            console.log("direkt");
         }
     }
     function handleDeleteMark() {

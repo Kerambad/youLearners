@@ -65,7 +65,7 @@ export default function HistoryElement(props: HistoryElementProps) {
 
         <>
         <span className='history-element'>
-            <div className='overflow-scroll mark-text' onClick={() => handleLoadMark()}>
+            <div className='mark-text' onClick={() => handleLoadMark()}>
                 <p className='m-0'>{props.video.title}</p>
             </div>
             <p className='symbol'>

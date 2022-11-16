@@ -1,11 +1,10 @@
 .history-element {
     display: flex;
     flex-direction: row;
-
     border: 0.75px solid;
     border-radius: 0.375rem;
     height: 4rem;
-
+    background-color: white;
 }
 
 .mark-text {

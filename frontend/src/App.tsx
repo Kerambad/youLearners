@@ -21,18 +21,28 @@ function App() {
   const [player, setPlayer] = useState<any>();
 
   return (
-    <span className="app-style ">
-      <div className='fixed-top video-player'>
-        <VideoPlayer videoPlayOptions={videoPlayOptions} setCurentVideoStats={setCurentVideoStats} player={player} setPlayer={setPlayer} />
+    <div className="app-style">
+      <div className='video'>
+        <div className='video-player'>
+          <VideoPlayer videoPlayOptions={videoPlayOptions} setCurentVideoStats={setCurentVideoStats} player={player} setPlayer={setPlayer} />
+        </div>
       </div>
-      <div className='overflow-scroll option-section'>
-        <VideoMarksGallery errorMessages={errorMessages} setErrorMessages={setErrorMessages} player={player} marks={marks} activeComponent={activeComponent} loadVideoOptions={setVideoPlayOptions} currentVideoStats={curentVideoStats} addNewMark={addNewMark} removeMarkById={removeMarkById} editMark={updateMark} />
-        <VideoInsert setVideoIdFunction={addNewVideo} isActive={activeComponent} loadVideoOptions={setVideoPlayOptions} />
-        <History isActive={activeComponent} allVideos={videos} removeById={removeVideoById} updateVideo={updateVideo} loadVideoOptions={setVideoPlayOptions} />
-        <AllMarksGallery errorMessages={errorMessages} setErrorMessages={setErrorMessages} marks={marks} activeComponent={activeComponent} loadVideoOptions={setVideoPlayOptions} removeMarkById={removeMarkById} editMark={updateMark} currentVideoStats={curentVideoStats} player={player} />
+      <div className='option-section'>
+        <div className='left-0'>
+          <VideoMarksGallery errorMessages={errorMessages} setErrorMessages={setErrorMessages} player={player} marks={marks} activeComponent={activeComponent} loadVideoOptions={setVideoPlayOptions} currentVideoStats={curentVideoStats} addNewMark={addNewMark} removeMarkById={removeMarkById} editMark={updateMark} />
+        </div>
+        <div className='left-15'>
+          <VideoInsert setVideoIdFunction={addNewVideo} isActive={activeComponent} loadVideoOptions={setVideoPlayOptions} />
+        </div>
+        <div className='left-38'>
+          <AllMarksGallery errorMessages={errorMessages} setErrorMessages={setErrorMessages} marks={marks} activeComponent={activeComponent} loadVideoOptions={setVideoPlayOptions} removeMarkById={removeMarkById} editMark={updateMark} currentVideoStats={curentVideoStats} player={player} />
+        </div>
+        <div className='left-100'>
+          <History isActive={activeComponent} allVideos={videos} removeById={removeVideoById} updateVideo={updateVideo} loadVideoOptions={setVideoPlayOptions} />
+        </div>
+        <Navbar setRenderComponentFunction={setRenderedComponent} />
       </div>
-      <Navbar setRenderComponentFunction={setRenderedComponent} />
-    </span>
+    </div>
   );
 }
 

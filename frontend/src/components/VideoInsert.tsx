@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { LoadVideo } from '../models/LoadVideo'
 import { Video } from '../models/Video'
 import PreRenderVideo from './PreRenderVideo'
+import "./VideoInsert.css"
 
 
 type VideoInsertProps = {
@@ -54,12 +55,12 @@ export default function VideoInsert(props: VideoInsertProps) {
 
     if (props.isActive !== 1) return null;
     return (
-        <div className={"container text-center"}>
+        <span>
             <PreRenderVideo videoId={videoId} getVideoStatsFunction={(action) => setVideoTitle(action.target.videoTitle)} />
-            <form onSubmit={handleFormSubmit}>
-                <div className='form-floating my-1'>
+            <form onSubmit={handleFormSubmit}  className={"insert-form"}>
+                <div className='form-floating '>
                     <input
-                        className={"form-control my-2 w-100"}
+                        className={"form-control"}
                         id='linkInsert'
                         type={"text"}
                         placeholder="Video-Link"
@@ -68,9 +69,9 @@ export default function VideoInsert(props: VideoInsertProps) {
                     />
                     <label htmlFor='linkInsert'>Video-Link</label>
                 </div>
-                <div className='form-floating my-1' >
+                <div className='form-floating' >
                     <input
-                        className={"form-control my-2 w-100"}
+                        className={"form-control"}
                         id='idInsert'
                         type={"text"}
                         placeholder="Video-ID"
@@ -80,9 +81,9 @@ export default function VideoInsert(props: VideoInsertProps) {
                     />
                     <label htmlFor='idInsert'>Video-ID</label>
                 </div>
-                <div className='form-floating my-1' >
+                <div className='form-floating' >
                     <textarea
-                        className={"form-control my-2 w-100"}
+                        className={"form-control"}
                         id='title'
                         placeholder="Title"
                         value={videoTitle}
@@ -95,9 +96,9 @@ export default function VideoInsert(props: VideoInsertProps) {
                 </div>
                 <span className='buttons'>
                     <button className='btn btn-danger w-50' name='playVideo' id='play' type='button' onClick={handlePlayVideo}>Play Video</button>
-                    <button className='btn btn-outline-danger w-50' name='submit' id='submit' type='submit'>Add to Favorites</button>
+                    <button className='btn btn-light w-50' name='submit' id='submit' type='submit'>Add to Favorites</button>
                 </span>
             </form>
-        </div>
+        </span>
     )
 }

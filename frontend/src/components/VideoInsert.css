@@ -1,7 +1,7 @@
-.history-gallery {
+.insert-form {
     display: flex;
-    flex-direction: column;
-    padding: 0.25rem;
     justify-content: space-between;
+    flex-direction: column;
     gap: 0.5rem;
+    padding: 0.25rem;
 }

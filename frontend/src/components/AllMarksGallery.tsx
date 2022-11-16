@@ -30,7 +30,7 @@ export default function AllMarksGallery(props: AllMarksGalleryProps) {
 
     if (props.activeComponent !== 3) return null;
     return (
-        <span className='marks-gallery'>
+        <span className='marks-gallery left-50'>
             <div className='form-floating'>
                 <input
                     className="form-control"
