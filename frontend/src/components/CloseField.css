@@ -1,0 +1,6 @@
+.close-tile {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.25rem;
+    padding-right: 0.5rem;
+}
