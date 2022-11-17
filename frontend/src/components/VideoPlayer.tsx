@@ -37,7 +37,6 @@ export default function VideoPlayer(props: VideoPlayerProps) {
             goToTime(props.videoPlayOptions.startTime);
             isAllreadyPlayed = true
         }
-        console.log(e);
     };
 
     function goToTime(time: number) {
@@ -61,6 +60,7 @@ export default function VideoPlayer(props: VideoPlayerProps) {
         <>
             <YouTube
                 className='ratio ratio-16x9'
+                style={{maxHeight: "calc(100vh - 56.29px)"}}
                 videoId={props.videoPlayOptions.videoId}
                 onStateChange={(e) => actionHandler(e)}
                 onReady={(action) => loadVideoStats(action)}

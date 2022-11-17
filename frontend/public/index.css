@@ -1,0 +1,10 @@
+.body-style {
+
+    background-color: white;
+}
+
+@media (min-width:500px) {
+    .body-style {
+        background-color: rgb(0, 0, 0);
+    }
+}

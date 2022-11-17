@@ -56,12 +56,10 @@ export default function EditMark(props: EditMarkProps) {
     function handleFormExceptions(videoEndTime: number) {
         if (videoEndTime < formValues.time) {
             props.setErrorMessages((old) => old.concat(["Start-time must be in Video-length"]))
-            console.log("time to long");
 
         }
         if (!formValues.name.length) {
             props.setErrorMessages((old) => old.concat(["Name can't be empty"]))
-            console.log("name");
         }
         if (formValues.time < 0) {
             props.setErrorMessages((old) => old.concat(["Time can't be lower then 0"]))
@@ -118,7 +116,7 @@ export default function EditMark(props: EditMarkProps) {
                 Start-Time: <InputTime timeInSeconds={props.exsistingMark.time} setTimeInSeconds={setFormValues} isNotActive={false} attribute={"time"} />
             </span>
             <span className='time-input'>
-                End - Time: <InputTime timeInSeconds={formValues.endTime || 0} setTimeInSeconds={setFormValues} isNotActive={!isSection} attribute={"endTime"} />
+                End-Time: <InputTime timeInSeconds={formValues.endTime || 0} setTimeInSeconds={setFormValues} isNotActive={!isSection} attribute={"endTime"} />
             </span>
             {displayErrors()}
 

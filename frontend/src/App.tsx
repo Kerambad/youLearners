@@ -10,6 +10,7 @@ import useLoadVideo from './hooks/useLoadVideo';
 import VideoMarksGallery from './components/VideoMarksGallery';
 import { useState } from 'react';
 import "./App.css"
+import useIsMobile from './hooks/useIsMobile';
 
 function App() {
 
@@ -17,22 +18,25 @@ function App() {
   const { marks, addNewMark, removeMarkById, updateMark, errorMessages, setErrorMessages } = useManageMarks();
   const { setRenderedComponent, activeComponent } = useActiveComponent();
   const { videoPlayOptions, setVideoPlayOptions, curentVideoStats, setCurentVideoStats } = useLoadVideo();
-
+  const isMobile = useIsMobile()
   const [player, setPlayer] = useState<any>();
 
+
   return (
-    <span className="app-style ">
-      <div className='fixed-top video-player'>
-        <VideoPlayer videoPlayOptions={videoPlayOptions} setCurentVideoStats={setCurentVideoStats} player={player} setPlayer={setPlayer} />
+    <div className="app-style">
+      <div className='video'>
+        <div className='video-player'>
+          <VideoPlayer videoPlayOptions={videoPlayOptions} setCurentVideoStats={setCurentVideoStats} player={player} setPlayer={setPlayer} />
+        </div>
       </div>
-      <div className='overflow-scroll option-section'>
-        <VideoMarksGallery errorMessages={errorMessages} setErrorMessages={setErrorMessages} player={player} marks={marks} activeComponent={activeComponent} loadVideoOptions={setVideoPlayOptions} currentVideoStats={curentVideoStats} addNewMark={addNewMark} removeMarkById={removeMarkById} editMark={updateMark} />
-        <VideoInsert setVideoIdFunction={addNewVideo} isActive={activeComponent} loadVideoOptions={setVideoPlayOptions} />
-        <History isActive={activeComponent} allVideos={videos} removeById={removeVideoById} updateVideo={updateVideo} loadVideoOptions={setVideoPlayOptions} />
-        <AllMarksGallery errorMessages={errorMessages} setErrorMessages={setErrorMessages} marks={marks} activeComponent={activeComponent} loadVideoOptions={setVideoPlayOptions} removeMarkById={removeMarkById} editMark={updateMark} currentVideoStats={curentVideoStats} player={player} />
+      <div className=''>
+          <VideoMarksGallery isMobile={isMobile} setRenderedComponent={setRenderedComponent} errorMessages={errorMessages} setErrorMessages={setErrorMessages} player={player} marks={marks} activeComponent={activeComponent} loadVideoOptions={setVideoPlayOptions} currentVideoStats={curentVideoStats} addNewMark={addNewMark} removeMarkById={removeMarkById} editMark={updateMark} />
+          <VideoInsert isMobile={isMobile} setRenderedComponent={setRenderedComponent} setVideoIdFunction={addNewVideo} activeComponent={activeComponent} loadVideoOptions={setVideoPlayOptions} />
+          <AllMarksGallery isMobile={isMobile} setRenderedComponent={setRenderedComponent} errorMessages={errorMessages} setErrorMessages={setErrorMessages} marks={marks} activeComponent={activeComponent} loadVideoOptions={setVideoPlayOptions} removeMarkById={removeMarkById} editMark={updateMark} currentVideoStats={curentVideoStats} player={player} />
+          <History isMobile={isMobile} setRenderedComponent={setRenderedComponent} activeComponent={activeComponent} allVideos={videos} removeById={removeVideoById} updateVideo={updateVideo} loadVideoOptions={setVideoPlayOptions} />
+        <Navbar setRenderComponentFunction={setRenderedComponent} activeComponent={activeComponent}/>
       </div>
-      <Navbar setRenderComponentFunction={setRenderedComponent} />
-    </span>
+    </div>
   );
 }
 

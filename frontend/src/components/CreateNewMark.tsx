@@ -37,7 +37,6 @@ export default function CreateNewMark(props: CreateNewMarkProps) {
     action.preventDefault()
     prepareValuesForSubmit()
     if (!props.errorMessages.length && nameisPresent) {
-      console.log(formValues.name.length);
       props.addNewMark(formValues)
     }
     if (!props.errorMessages.length && nameisPresent) {
@@ -95,7 +94,6 @@ export default function CreateNewMark(props: CreateNewMarkProps) {
     props.setRenderAddComponent(false)
     props.setErrorMessages([])
   }
-  console.log(formValues.time);
 
 
 
