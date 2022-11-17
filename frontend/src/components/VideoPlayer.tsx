@@ -37,7 +37,6 @@ export default function VideoPlayer(props: VideoPlayerProps) {
             goToTime(props.videoPlayOptions.startTime);
             isAllreadyPlayed = true
         }
-        console.log(e);
     };
 
     function goToTime(time: number) {

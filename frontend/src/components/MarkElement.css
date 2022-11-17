@@ -17,6 +17,9 @@
     height: 4rem;
     margin: 0;
 }
+.mark-element:hover{
+    cursor: pointer;
+}
 
 .symbol {
     flex-basis: 18%;

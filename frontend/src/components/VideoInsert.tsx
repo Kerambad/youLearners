@@ -1,14 +1,18 @@
 import React, { useState } from 'react'
 import { LoadVideo } from '../models/LoadVideo'
 import { Video } from '../models/Video'
+import CloseField from './CloseField'
 import PreRenderVideo from './PreRenderVideo'
 import "./VideoInsert.css"
+import "../App.css"
 
 
 type VideoInsertProps = {
     setVideoIdFunction: (video: Video) => void
-    isActive: number
+    activeComponent: number
     loadVideoOptions: (videoOptions: LoadVideo) => void
+    isMobile: boolean
+    setRenderedComponent: (status: number) => void
 }
 export default function VideoInsert(props: VideoInsertProps) {
 
@@ -53,9 +57,10 @@ export default function VideoInsert(props: VideoInsertProps) {
         setVideoTitle("")
     }
 
-    if (props.isActive !== 1) return null;
+    if (props.activeComponent !== 1) return null;
     return (
-        <span>
+        <div className='left-3705 option-section'>
+            <CloseField isMobile={props.isMobile} setRenderedComponent={props.setRenderedComponent} activeComponent={props.activeComponent}/>
             <PreRenderVideo videoId={videoId} getVideoStatsFunction={(action) => setVideoTitle(action.target.videoTitle)} />
             <form onSubmit={handleFormSubmit}  className={"insert-form"}>
                 <div className='form-floating '>
@@ -99,6 +104,6 @@ export default function VideoInsert(props: VideoInsertProps) {
                     <button className='btn btn-light w-50' name='submit' id='submit' type='submit'>Add to Favorites</button>
                 </span>
             </form>
-        </span>
+        </div>
     )
 }

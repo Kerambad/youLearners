@@ -1,6 +1,6 @@
 .option-section {
     padding-bottom: 60px;
-    padding-top: calc(0.56*100vw);
+    padding-top: calc((100vw/16) * 9);
 }
 
 .app-style {
@@ -38,12 +38,12 @@
         left: 0;
     }
 
-    .left-15 {
-        left: 15%;
+    .left-3705 {
+        left: calc(37.5% - 175px);
     }
 
-    .left-38 {
-        left: 38%;
+    .left-6205 {
+        left: calc(62.5% - 175px);
     }
 
     .left-100 {

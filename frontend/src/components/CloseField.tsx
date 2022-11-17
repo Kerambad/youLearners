@@ -12,7 +12,9 @@ export default function CloseField(props: CloseFieldProps) {
         props.setRenderedComponent(-1)
     }
 
-    if (props.isMobile || props.activeComponent === -1) return null
+    if (props.isMobile || (props.activeComponent === -1)) {
+        return null
+    }
     return (
         <span className='close-tile'>
             <button 

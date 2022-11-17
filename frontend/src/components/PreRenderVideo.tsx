@@ -12,7 +12,6 @@ export default function PreRenderVideo(props: PreRenderVideoProps) {
             className='visually-hidden'
                 videoId={props.videoId}
                 onReady={(e) => props.getVideoStatsFunction(e)}
-                onStateChange={(e) => console.log(e)}
             />
   )
 }

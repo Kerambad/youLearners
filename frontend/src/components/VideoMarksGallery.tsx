@@ -5,10 +5,11 @@ import CreateNewMark from './CreateNewMark'
 import MarkElement from './MarkElement'
 import { CurrentVideoStats } from '../models/CurrentVideoStats'
 import "./VideoMarkGallery.css"
+import CloseField from './CloseField'
+import "../App.css"
 
 type VideoMarksGalleryProps = {
     marks: Mark[]
-    activeComponent: number
     loadVideoOptions: (videoOptions: LoadVideo) => void
     currentVideoStats: CurrentVideoStats
     addNewMark: (newMark: Mark) => void
@@ -17,6 +18,9 @@ type VideoMarksGalleryProps = {
     player: any
     errorMessages: string[]
     setErrorMessages: React.Dispatch<React.SetStateAction<string[]>>
+    isMobile: boolean
+    setRenderedComponent: (status: number) => void
+    activeComponent: number
 }
 
 export default function VideoMarksGallery(props: VideoMarksGalleryProps) {
@@ -35,7 +39,9 @@ export default function VideoMarksGallery(props: VideoMarksGalleryProps) {
     if (props.activeComponent !== 0) return null;
     if (renderAddComponent) return <CreateNewMark errorMessages={props.errorMessages} setErrorMessages={props.setErrorMessages} setRenderAddComponent={setRenderAddComponent} addNewMark={props.addNewMark} currentVideoStats={props.currentVideoStats} player={props.player} setCloseAddComponent={setRenderAddComponent} />;
     return (
+        <div className='left-0 option-section'>
         <span className='marks-gallery'>
+            <CloseField isMobile={props.isMobile} setRenderedComponent={props.setRenderedComponent} activeComponent={props.activeComponent}/>
             <span className='filter-add'>
                 <div className='form-floating input-field'>
                     <input
@@ -52,5 +58,6 @@ export default function VideoMarksGallery(props: VideoMarksGalleryProps) {
             </span>
             {filterMarks().map((mark, key) => <MarkElement errorMessages={props.errorMessages} setErrorMessages={props.setErrorMessages} mark={mark} key={key} loadVideoOptions={props.loadVideoOptions} removeById={props.removeMarkById} editMark={props.editMark} player={props.player} currentVideoStats={props.currentVideoStats} />)}
         </span>
+        </div>
     )
 }
