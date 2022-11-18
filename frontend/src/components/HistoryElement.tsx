@@ -49,7 +49,7 @@ export default function HistoryElement(props: HistoryElementProps) {
                             onChange={(action) => setNewTitle(action.target.value)}
                             rows={1}
                             style={{ height: '5em' }}
-                            required={true}
+                            // required={true}
                         />
                         <label htmlFor='title'>Title</label>
                     </div>
